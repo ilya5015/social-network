@@ -1,0 +1,13 @@
+.nav {
+    grid-area: n;
+    background-color: rgb(232, 155, 228);
+    border: 4px outset #d4418e;
+}
+
+.navItem {
+    color: rgb(79, 73, 73);
+}
+
+.navItem.active {
+    color: wheat;
+}
