@@ -1,0 +1,13 @@
+.content {
+    grid-area: c;
+    background-color: #d4418e;
+    background-image: linear-gradient(315deg, #d4418e 0%, #0652c5 74%);
+}
+
+.content img {
+    width: 1000px;
+}
+
+.post {
+    color: rgb(56, 39, 39);
+}
