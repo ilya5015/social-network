@@ -1,31 +1,17 @@
-import styles from './Profile.module.css'
-import anime from './anime.jpg'
+import styles from "./Profile.module.css";
+import anime from "./anime.jpg";
+import MyPosts from "./MyPosts/MyPosts";
 
 const Profile = () => {
-    return (
-        <div className={ styles.content }>
-            <div>
-                <img src={ anime }/>
-            </div>
-            <div>
-                avatar + description
-            </div>
-            <div>
-                my posts
-            <div>
-                new post
-            </div>
-            <div className={ styles.posts }>
-            <div className={ styles.post }>
-                post1
-            </div>
-            <div className={ styles.post }>
-                post2
-            </div>
-          </div>
-        </div>
+  return (
+    <div>
+      <div>
+        <img src={anime} width="1000px" />
       </div>
-    )
-}
+      <div>avatar + description</div>
+      <MyPosts />
+    </div>
+  );
+};
 
-export default Profile
+export default Profile;
