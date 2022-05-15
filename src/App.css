@@ -8,11 +8,14 @@
     "n c";
   grid-template-rows: 60px 1fr;
   grid-template-columns: 2fr 10fr;
-  grid-gap: 10px;
+  grid-gap: 0px;
+  border-top: 5px rgb(215, 216, 239) solid;
+  border-right: 5px rgb(215, 216, 239) solid;
+  border-bottom: 5px rgb(215, 216, 239) solid;
+  border-left: 5px rgb(215, 216, 239) solid;
 }
 
 .app-wrapper-content {
   grid-area: c;
-  background-color: #d4418e;
-  background-image: linear-gradient(315deg, #d4418e 0%, #0652c5 74%);
+  background-color: #008080;
 }
