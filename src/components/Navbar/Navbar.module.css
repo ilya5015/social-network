@@ -1,13 +1,15 @@
 .nav {
-    grid-area: n;
-    background-color: rgb(232, 155, 228);
-    border: 4px outset #d4418e;
+  grid-area: n;
+  background-color: #818181;
+  padding: 20px;
+  border: 3px #c3c3c3 solid;
 }
 
 .navItem {
-    color: rgb(79, 73, 73);
+  color: rgb(79, 73, 73);
 }
 
-.navItem.active {
-    color: wheat;
+.navItem a.active {
+  text-decoration: none;
+  color: wheat;
 }

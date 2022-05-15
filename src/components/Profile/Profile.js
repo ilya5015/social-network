@@ -1,5 +1,5 @@
 import styles from "./Profile.module.css";
-import anime from "./anime.jpg";
+import anime from "./anime.png";
 import MyPosts from "./MyPosts/MyPosts";
 
 const Profile = () => {
