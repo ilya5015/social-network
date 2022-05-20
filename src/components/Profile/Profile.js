@@ -1,14 +1,12 @@
 import styles from "./Profile.module.css";
 import anime from "./anime.png";
 import MyPosts from "./MyPosts/MyPosts";
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
 const Profile = () => {
   return (
     <div>
-      <div>
-        <img src={anime} width="1000px" />
-      </div>
-      <div>avatar + description</div>
+      <ProfileInfo />
       <MyPosts />
     </div>
   );
