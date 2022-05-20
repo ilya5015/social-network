@@ -3,9 +3,11 @@ import Post from "./Post/Post";
 
 const MyPosts = () => {
   return (
-    <div>
+    <div className={styles.postsBlock}>
       my posts
-      <button type="button">Add new post</button>
+      <div>
+        <button type="button">Add new post</button>
+      </div>
       <div className={styles.posts}>
         <Post
           message="Hi there, how are you ?"
