@@ -1,23 +1,8 @@
 import styles from "./MyPosts.module.css";
 import Post from "./Post/Post";
 
-const MyPosts = () => {
-  let postData = [
-    {
-      id: 1,
-      message: "Hi there, how are you ?",
-      likeCounter: "40",
-      dislikeCounter: "20",
-    },
-    {
-      id: 2,
-      message: "It`s my first post",
-      likeCounter: "30",
-      dislikeCounter: "10",
-    },
-  ];
-
-  let postElements = postData.map((post) => {
+const MyPosts = (props) => {
+  let postElements = props.postData.map((post) => {
     return (
       <Post
         message={post.message}
