@@ -14,7 +14,7 @@ function App(props) {
       <div className="app-wrapper">
         <Header />
         <Navbar />
-        <div className="app-wrapper-content">
+        <div className="app-wrapper-content window">
           <Routes>
             <Route
               path="/profile"

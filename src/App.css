@@ -9,10 +9,6 @@
   grid-template-rows: 60px 1fr;
   grid-template-columns: 2fr 10fr;
   grid-gap: 0px;
-  border-top: 5px rgb(215, 216, 239) solid;
-  border-right: 5px rgb(215, 216, 239) solid;
-  border-bottom: 5px rgb(215, 216, 239) solid;
-  border-left: 5px rgb(215, 216, 239) solid;
 }
 
 .app-wrapper-content {
