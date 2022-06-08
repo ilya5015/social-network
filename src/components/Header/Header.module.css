@@ -3,17 +3,6 @@
   background: linear-gradient(90deg, #010081, #4253a9, #8193ee);
 }
 
-.logo {
-  display: flex;
-  flex-direction: row;
-}
-
-.logo img {
-  height: 50px;
-  width: 100px;
-  height: auto;
-}
-
 .logo .logoText {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 600;
