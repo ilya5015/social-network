@@ -13,18 +13,18 @@ const MyPosts = (props) => {
     );
   });
 
-  const newPost = useRef(null);
+  let newPost = useRef(null);
 
   let postPost = () => {
-    let postText = newPost.current.value;
-    alert(postText);
+    let postMessage = newPost.current.value;
+    props.dispatch({ type: "ADD-POST", postMessage: postMessage });
   };
 
   return (
     <div className={styles.postsBlock}>
       my posts
       <div>
-        <div class="field-row-stacked">
+        <div className="field-row-stacked">
           <textarea ref={newPost} rows="8"></textarea>
         </div>
         <button onClick={postPost}>Add new post</button>

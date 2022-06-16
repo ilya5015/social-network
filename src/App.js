@@ -19,7 +19,10 @@ function App(props) {
             <Route
               path="/profile"
               element={
-                <Profile postData={props.appState.profilePage.postData} />
+                <Profile
+                  postData={props.state.profilePage.postData}
+                  dispatch={props.dispatch}
+                />
               }
             />
             <Route
@@ -27,8 +30,8 @@ function App(props) {
               path="/dialogs"
               element={
                 <Dialogs
-                  dialogsData={props.appState.messagesPage.dialogsData}
-                  messagesData={props.appState.messagesPage.messagesData}
+                  dialogsData={props.state.messagesPage.dialogsData}
+                  messagesData={props.state.messagesPage.messagesData}
                 />
               }
             />
