@@ -1,3 +1,6 @@
+import dialogsReducer from "./dialogs-reducer";
+import profileReducer from "./profile-reducer";
+
 let store = {
   _state: {
     profilePage: {
@@ -38,31 +41,19 @@ let store = {
     return this._state;
   },
 
-  addPost(postMessage) {
-    debugger;
-    let newPost = {
-      id: 5,
-      message: postMessage,
-      likeCounter: 0,
-      dislikeCounter: 0,
-    };
-
-    this._state.profilePage.postData.push(newPost);
-    this.rerenderEntireTree(store);
-  },
-
-  rerenderEntireTree() {
+  callSubscriber() {
     console.log("State is changed");
   },
 
   subscribe(observer) {
-    this.rerenderEntireTree = observer;
+    this.callSubscriber = observer;
   },
 
   dispatch(action) {
-    if (action.type === "ADD-POST") {
-      this.addPost(action.postMessage);
-    }
+    this._state.profilePage = profileReducer(this._state.profilePage, action);
+    this._state.messagesPage = dialogsReducer(this._state.messagesPage, action);
+
+    this.callSubscriber(store);
   },
 };
 
