@@ -1,8 +1,10 @@
 import styles from "./MyPosts.module.css";
 import Post from "./Post/Post";
 import { useRef } from "react";
+import { addPostActionCreator } from "../../Redux/profile-reducer";
 
 const MyPosts = (props) => {
+  debugger;
   let postElements = props.postData.map((post) => {
     return (
       <Post
@@ -17,7 +19,9 @@ const MyPosts = (props) => {
 
   let postPost = () => {
     let postMessage = newPost.current.value;
-    props.dispatch({ type: "ADD-POST", postMessage: postMessage });
+    let action = addPostActionCreator(postMessage);
+    props.dispatch(action);
+    newPost.current.value = "";
   };
 
   return (
