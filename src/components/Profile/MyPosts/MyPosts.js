@@ -1,10 +1,8 @@
 import styles from "./MyPosts.module.css";
 import Post from "./Post/Post";
-import { useRef } from "react";
-import { addPostActionCreator } from "../../Redux/profile-reducer";
+import { createRef, useRef } from "react";
 
 const MyPosts = (props) => {
-  debugger;
   let postElements = props.postData.map((post) => {
     return (
       <Post
@@ -15,12 +13,15 @@ const MyPosts = (props) => {
     );
   });
 
-  let newPost = useRef(null);
+  let newPost = createRef();
+
+  let onPostChange = () => {
+    let postMessage = newPost.current.value;
+    props.addPostMessage(postMessage);
+  };
 
   let postPost = () => {
-    let postMessage = newPost.current.value;
-    let action = addPostActionCreator(postMessage);
-    props.dispatch(action);
+    props.addPost();
     newPost.current.value = "";
   };
 
@@ -29,7 +30,7 @@ const MyPosts = (props) => {
       my posts
       <div>
         <div className="field-row-stacked">
-          <textarea ref={newPost} rows="8"></textarea>
+          <textarea onChange={onPostChange} ref={newPost} rows="8"></textarea>
         </div>
         <button onClick={postPost}>Add new post</button>
       </div>

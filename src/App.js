@@ -2,7 +2,7 @@ import "./App.css";
 import Header from "./components/Header/Header.js";
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
-import Dialogs from "./components/Dialogs/Dialogs";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
@@ -20,7 +20,7 @@ function App(props) {
               path="/profile"
               element={
                 <Profile
-                  postData={props.state.profilePage.postData}
+                  state={props.state.profilePage}
                   dispatch={props.dispatch}
                 />
               }
@@ -29,9 +29,8 @@ function App(props) {
               exact
               path="/dialogs"
               element={
-                <Dialogs
-                  dialogsData={props.state.dialogsPage.dialogsData}
-                  messagesData={props.state.dialogsPage.messagesData}
+                <DialogsContainer
+                  state={props.state.dialogsPage}
                   dispatch={props.dispatch}
                 />
               }
