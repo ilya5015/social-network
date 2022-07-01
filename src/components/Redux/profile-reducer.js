@@ -1,4 +1,5 @@
 const ADD_POST = "ADD-POST";
+const ADD_POST_MESSAGE = "ADD-POST-MESSAGE";
 
 let initialState = {
   postData: [
@@ -15,28 +16,41 @@ let initialState = {
       dislikeCounter: "10",
     },
   ],
+  newPostText: "",
 };
 
 const profileReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_POST:
+    case ADD_POST: {
       let newPost = {
         id: 5,
-        message: action.postMessage,
+        message: state.newPostText,
         likeCounter: 0,
         dislikeCounter: 0,
       };
 
-      state.postData.push(newPost);
-      break;
+      let stateCopy = { ...state };
+      stateCopy.postData = [...state.postData];
+      stateCopy.postData.push(newPost);
+      stateCopy.newPostText = "";
+      return stateCopy;
+    }
+    case ADD_POST_MESSAGE: {
+      let stateCopy = { ...state };
+      stateCopy.newPostText = action.postMessage;
+      return stateCopy;
+    }
     default:
       return state;
   }
-
-  return state;
 };
 
 export default profileReducer;
-export const addPostActionCreator = (postMessage) => {
-  return { type: ADD_POST, postMessage: postMessage };
+
+export const addPostActionCreator = () => {
+  return { type: ADD_POST };
+};
+
+export const addPostMessageActionCreator = (postMessage) => {
+  return { type: ADD_POST_MESSAGE, postMessage: postMessage };
 };

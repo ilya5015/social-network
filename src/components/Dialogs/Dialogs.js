@@ -1,6 +1,5 @@
 import styles from "./Dialogs.module.css";
-import { useRef } from "react";
-import { addMessageActionCreator } from "../Redux/dialogs-reducer";
+import { createRef } from "react";
 
 import DialogItem from "./DialogItem/DialogItem";
 import DialogMessage from "./DialogMessage/DialogMessage";
@@ -14,12 +13,15 @@ const Dialogs = (props) => {
     return <DialogMessage message={messageItem.message} />;
   });
 
-  const newMessage = useRef(null);
+  const newMessage = createRef();
+
+  let onMessageChange = () => {
+    let messageText = newMessage.current.value;
+    props.addMessageText(messageText);
+  };
 
   let sendMessage = () => {
-    let messageText = newMessage.current.value;
-    let action = addMessageActionCreator(messageText);
-    props.dispatch(action);
+    props.addMessage();
     newMessage.current.value = "";
   };
 
@@ -33,7 +35,11 @@ const Dialogs = (props) => {
       </ul>
       <button onClick={sendMessage}>Send</button>
       <div className="field-row-stacked">
-        <textarea ref={newMessage} rows="8"></textarea>
+        <textarea
+          onChange={onMessageChange}
+          ref={newMessage}
+          rows="8"
+        ></textarea>
       </div>
     </div>
   );
