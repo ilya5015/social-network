@@ -1,6 +1,6 @@
 import styles from "./MyPosts.module.css";
 import Post from "./Post/Post";
-import { createRef, useRef } from "react";
+import { createRef } from "react";
 
 const MyPosts = (props) => {
   let postElements = props.postData.map((post) => {
@@ -9,6 +9,7 @@ const MyPosts = (props) => {
         message={post.message}
         likeCounter={post.likeCounter}
         dislikeCounter={post.dislikeCounter}
+        key={post.id}
       />
     );
   });
