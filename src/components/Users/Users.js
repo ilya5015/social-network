@@ -1,76 +1,114 @@
-const Users = (props) => {
-  if (props.users.length === 0) {
-    props.setUsers([
-      {
-        id: 4,
-        fullName: "Ilya",
-        location: { city: "Moscow", country: "Russia" },
-        status: "привет",
-        isFollowed: false,
-        photoUrl: "https://slovnet.ru/wp-content/uploads/2018/12/2-18.jpg",
-      },
-      {
-        id: 5,
-        fullName: "Amir",
-        location: { city: "Masdar", country: "Emirates" },
-        status: "مرحبا",
-        isFollowed: false,
-        photoUrl:
-          "https://i.pinimg.com/originals/5c/4b/4c/5c4b4c5ae28db1a0ba8535f5c3315a97.jpg",
-      },
-      {
-        id: 6,
-        fullName: "John",
-        location: { city: "New-York", country: "USA" },
-        status: "hi there",
-        isFollowed: false,
-        photoUrl: "https://fight.ru/wp-content/uploads/2020/03/dzhona-sina.jpg",
-      },
-    ]);
+import axios from "axios";
+import React from "react";
+import styles from "./Users.module.css";
+
+class Users extends React.Component {
+  componentDidMount() {
+    if (this.props.users.length === 0) {
+      axios
+        .get(
+          `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
+        )
+        .then((response) => {
+          console.log(response);
+          this.props.setUsers(response.data.items);
+          this.props.setTotalUsers(response.data.totalCount);
+        });
+    }
   }
 
-  return (
-    <div>
-      {props.users.map((user) => (
-        <div key={user.id}>
-          <span>
-            <div>
-              <img src={user.photoUrl} width="100" height="100" />
-            </div>
-            <div>
-              {user.followed ? (
-                <button
-                  onClick={() => {
-                    props.unfollow(user.id);
-                  }}
-                >
-                  Unfollow
-                </button>
-              ) : (
-                <button
-                  onClick={() => {
-                    props.follow(user.id);
-                  }}
-                >
-                  Follow
-                </button>
-              )}
-            </div>
-          </span>
-          <span>
-            <span>
-              <div>{user.fullName}</div>
-              <div>{user.status}</div>
-            </span>
-            <span>
-              <div>{user.location.city}</div>
-              <div>{user.location.country}</div>
-            </span>
-          </span>
+  onPageChanged = (page) => {
+    this.props.setCurrentPage(page);
+    axios
+      .get(
+        `https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`
+      )
+      .then((response) => {
+        console.log(response);
+        this.props.setUsers(response.data.items);
+      });
+  };
+
+  render() {
+    let pagesCount = Math.ceil(this.props.totalUsers / this.props.pageSize);
+    let pages = [];
+    for (let i = 1; i <= pagesCount; i++) {
+      pages.push(i);
+    }
+
+    return (
+      <div>
+        <div>
+          {pages.map((page) => {
+            return (
+              <span
+                className={
+                  this.props.currentPage === page
+                    ? styles.selectedPage
+                    : styles.page
+                }
+                onClick={() => {
+                  this.onPageChanged(page);
+                }}
+              >
+                {page}
+              </span>
+            );
+          })}
         </div>
-      ))}
-    </div>
-  );
-};
+
+        <div>
+          {this.props.users.map((user) => (
+            <div key={user.id}>
+              <span>
+                <div>
+                  <img
+                    src={
+                      user.photos.small != null
+                        ? (user.photos.small =
+                            "https://temperaturka.com/wp-content/uploads/5/d/f/5dfafb5bc640c3978688e632a5aa46f3.jpe")
+                        : user.photos.small
+                    }
+                    width="100"
+                    height="100"
+                  />
+                </div>
+                <div>
+                  {user.followed ? (
+                    <button
+                      onClick={() => {
+                        this.props.unfollow(user.id);
+                      }}
+                    >
+                      Unfollow
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        this.props.follow(user.id);
+                      }}
+                    >
+                      Follow
+                    </button>
+                  )}
+                </div>
+              </span>
+              <span>
+                <span>
+                  <div>{user.name}</div>
+                  <div>{user.status}</div>
+                </span>
+                <span>
+                  <div>{"user.location.city"}</div>
+                  <div>{"user.location.country"}</div>
+                </span>
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+}
 
 export default Users;
