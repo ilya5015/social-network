@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import styles from "./Users.module.css";
 
 const Users = (props) => {
@@ -31,16 +32,18 @@ const Users = (props) => {
           <div key={user.id}>
             <span>
               <div>
-                <img
-                  src={
-                    user.photos.small != null
-                      ? (user.photos.small =
-                          "https://temperaturka.com/wp-content/uploads/5/d/f/5dfafb5bc640c3978688e632a5aa46f3.jpe")
-                      : user.photos.small
-                  }
-                  width="100"
-                  height="100"
-                />
+                <NavLink to={`/profile/${user.id}`}>
+                  <img
+                    src={
+                      user.photos.small != null
+                        ? (user.photos.small =
+                            "https://temperaturka.com/wp-content/uploads/5/d/f/5dfafb5bc640c3978688e632a5aa46f3.jpe")
+                        : user.photos.small
+                    }
+                    width="100"
+                    height="100"
+                  />
+                </NavLink>
               </div>
               <div>
                 {user.followed ? (

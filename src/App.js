@@ -1,7 +1,7 @@
 import "./App.css";
 import Header from "./components/Header/Header.js";
 import Navbar from "./components/Navbar/Navbar";
-import Profile from "./components/Profile/Profile";
+import ProfileContainer from "./components/Profile/ProfileContainer";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
@@ -18,9 +18,18 @@ function App(props) {
         <div className="app-wrapper-content window">
           <Routes>
             <Route
+              path="/profile/:userId"
+              element={
+                <ProfileContainer
+                  state={props.state.profilePage}
+                  dispatch={props.dispatch}
+                />
+              }
+            />
+            <Route
               path="/profile"
               element={
-                <Profile
+                <ProfileContainer
                   state={props.state.profilePage}
                   dispatch={props.dispatch}
                 />
