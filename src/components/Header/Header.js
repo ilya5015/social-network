@@ -1,6 +1,7 @@
+import { NavLink } from "react-router-dom";
 import styles from "./Header.module.css";
 
-const Header = () => {
+const Header = (props) => {
   return (
     <header className={styles.header}>
       <div className="window">
@@ -15,6 +16,13 @@ const Header = () => {
             <p className="status-bar-field">Press F1 for help</p>
             <p className="status-bar-field">Slide 1</p>
             <p className="status-bar-field">CPU Usage: 14%</p>
+          </div>
+          <div className={styles.loginBlock}>
+            {props.isAuth ? (
+              <div>{props.login}</div>
+            ) : (
+              <NavLink to="/login">Log in</NavLink>
+            )}
           </div>
         </div>
       </div>
