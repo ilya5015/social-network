@@ -16,13 +16,15 @@ const Header = (props) => {
             <p className="status-bar-field">Press F1 for help</p>
             <p className="status-bar-field">Slide 1</p>
             <p className="status-bar-field">CPU Usage: 14%</p>
-          </div>
-          <div className={styles.loginBlock}>
-            {props.isAuth ? (
-              <div>{props.login}</div>
-            ) : (
-              <NavLink to="/login">Log in</NavLink>
-            )}
+            <div className={styles.loginBlock}>
+              {props.isAuth ? (
+                <div>{props.login}</div>
+              ) : (
+                <NavLink to="/login">
+                  <button style={styles}>Log in</button>
+                </NavLink>
+              )}
+            </div>
           </div>
         </div>
       </div>
