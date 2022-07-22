@@ -1,4 +1,3 @@
-import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { usersApi } from "../../api/api";
 import styles from "./Users.module.css";
@@ -50,11 +49,16 @@ const Users = (props) => {
               <div>
                 {user.followed ? (
                   <button
+                    disabled={props.followingInProgressUsers.some(
+                      (userId) => user.id === userId
+                    )}
                     onClick={() => {
+                      props.toggleFollowingProcess(true, user.id);
                       usersApi.unfollowUser(user.id).then((data) => {
                         if (data.resultCode === 0) {
                           props.unfollow(user.id);
                         }
+                        props.toggleFollowingProcess(false, user.id);
                       });
                     }}
                   >
@@ -62,11 +66,16 @@ const Users = (props) => {
                   </button>
                 ) : (
                   <button
+                    disabled={props.followingInProgressUsers.some(
+                      (userId) => user.id === userId
+                    )}
                     onClick={() => {
+                      props.toggleFollowingProcess(true, user.id);
                       usersApi.followUser(user.id).then((data) => {
                         if (data.resultCode === 0) {
                           props.follow(user.id);
                         }
+                        props.toggleFollowingProcess(false, user.id);
                       });
                     }}
                   >
