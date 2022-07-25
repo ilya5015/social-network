@@ -1,7 +1,4 @@
-import {
-  addPostActionCreator,
-  addPostMessageActionCreator,
-} from "../../Redux/profile-reducer";
+import { addPost, addPostMessage } from "../../Redux/profile-reducer";
 import MyPosts from "./MyPosts";
 
 import { connect } from "react-redux";
@@ -13,20 +10,9 @@ let mapStateToProps = (state) => {
   };
 };
 
-let mapDispatchToProps = (dispatch) => {
-  return {
-    addPost: () => {
-      dispatch(addPostActionCreator());
-    },
-    addPostMessage: (postMessage) => {
-      dispatch(addPostMessageActionCreator(postMessage));
-    },
-  };
-};
-
-const SuperMyPostsContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MyPosts);
+const SuperMyPostsContainer = connect(mapStateToProps, {
+  addPost,
+  addPostMessage,
+})(MyPosts);
 
 export default SuperMyPostsContainer;

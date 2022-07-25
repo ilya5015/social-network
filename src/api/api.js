@@ -27,3 +27,25 @@ export const usersApi = {
     });
   },
 };
+
+export const profileApi = {
+  getUser(userId) {
+    return apiInstance.get(`profile/${userId}`).then((response) => {
+      return response.data;
+    });
+  },
+};
+
+export const headerApi = {
+  getAuthUser() {
+    return apiInstance
+      .get(`auth/me`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        if (response.data.resultCode === 0) {
+          return response.data.data;
+        }
+      });
+  },
+};

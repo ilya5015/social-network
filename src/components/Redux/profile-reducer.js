@@ -1,3 +1,5 @@
+import { profileApi } from "../../api/api";
+
 const ADD_POST = "ADD-POST";
 const ADD_POST_MESSAGE = "ADD-POST-MESSAGE";
 const SET_USER_PROFILE = "SET-USER-PROFILE";
@@ -47,14 +49,22 @@ const profileReducer = (state = initialState, action) => {
 
 export default profileReducer;
 
-export const addPostActionCreator = () => {
+export const addPost = () => {
   return { type: ADD_POST };
 };
 
-export const addPostMessageActionCreator = (postMessage) => {
+export const addPostMessage = (postMessage) => {
   return { type: ADD_POST_MESSAGE, postMessage };
 };
 
 export const setUserProfile = (profile) => {
   return { type: SET_USER_PROFILE, profile };
+};
+
+export const getUser = (userId) => {
+  return (dispatch) => {
+    profileApi.getUser(userId).then((data) => {
+      dispatch(setUserProfile(data));
+    });
+  };
 };
