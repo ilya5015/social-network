@@ -1,7 +1,6 @@
 import { headerApi } from "../../api/api";
 
 const SET_USER_DATA = "SET-USER-DATA";
-const SET_AUTH_USER = "SET-AUTH-USER";
 
 let initialState = {
   id: null,
