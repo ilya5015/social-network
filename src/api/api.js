@@ -43,8 +43,12 @@ export const headerApi = {
         withCredentials: true,
       })
       .then((response) => {
+        console.log(response);
         if (response.data.resultCode === 0) {
+          console.log(response.data.data);
           return response.data.data;
+        } else {
+          return false;
         }
       });
   },
