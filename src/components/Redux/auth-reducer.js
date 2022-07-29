@@ -1,6 +1,7 @@
 import { headerApi } from "../../api/api";
 
 const SET_USER_DATA = "SET-USER-DATA";
+const SET_AUTH_USER = "SET-AUTH-USER";
 
 let initialState = {
   id: null,
@@ -28,7 +29,9 @@ export const setAuthUserData = (data) => ({ type: SET_USER_DATA, data: data });
 export const setAuthUser = () => {
   return (dispatch) => {
     headerApi.getAuthUser().then((data) => {
-      dispatch(setAuthUserData(data));
+      if (data !== false) {
+        dispatch(setAuthUserData(data));
+      }
     });
   };
 };
