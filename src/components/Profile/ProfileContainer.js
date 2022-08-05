@@ -9,6 +9,7 @@ import {
 } from "../Redux/profile-reducer";
 import connectedWithAuthRedirect from "../../HOC/WithAuthRedirect";
 import { compose } from "redux";
+import { Navigate } from "react-router-dom";
 
 function withRouter(Component) {
   function ComponentWithRouterProps(props) {
@@ -19,7 +20,7 @@ function withRouter(Component) {
     return (
       <Component
         {...props}
-        userId={params.userId ? params.userId : "2"}
+        userId={params.userId}
         router={{ location, navigate, params }}
       />
     );
@@ -28,14 +29,55 @@ function withRouter(Component) {
 }
 
 class ProfileContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isShowMyProfile: true,
+    };
+  }
+
   componentDidMount() {
-    console.log("PROPSSS", this.props);
-    console.log(this.props.userId);
-    this.props.getUser(this.props.userId);
-    this.props.getUserStatus(this.props.userId);
+    // console.log("PROPSSS", this.props);
+    // console.log(this.props.userId);
+    // this.props.getUser(this.props.userId);
+    // this.props.getUserStatus(this.props.userId);
+
+    let userIdFromPath = this.props.userId;
+    let authorisedUserId = this.props.authorisedUserId;
+
+    if (userIdFromPath) {
+      this.props.getUser(userIdFromPath);
+      this.props.getUserStatus(userIdFromPath);
+    } else {
+      if (this.props.isAuth) {
+        this.props.getUser(authorisedUserId);
+        this.props.getUserStatus(authorisedUserId);
+      }
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    let userIdFromPath = this.props.userId;
+    let authorisedUserId = this.props.authorisedUserId;
+    let isShowMyProfile = this.state.isShowMyProfile;
+
+    if (isShowMyProfile) {
+      if (userIdFromPath === authorisedUserId) {
+        this.setState({ isShowMyProfile: false });
+      }
+
+      if (!userIdFromPath && this.props.isAuth) {
+        this.props.getUser(authorisedUserId);
+        this.props.getUserStatus(authorisedUserId);
+        this.setState({ isShowMyProfile: false });
+      }
+    }
   }
 
   render() {
+    if (!this.props.isAuth && !this.props.userId) {
+      return <Navigate to={"/login"} />;
+    }
     return (
       <Profile
         {...this.props}
@@ -50,6 +92,8 @@ class ProfileContainer extends React.Component {
 let mapStateToProps = (state) => ({
   profile: state.profilePage.profile,
   userStatus: state.profilePage.userStatus,
+  authorisedUserId: state.authReducer.id,
+  isAuth: state.authReducer.isAuth,
 });
 
 export default compose(

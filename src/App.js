@@ -9,54 +9,38 @@ import UsersContainer from "./components/Users/UsersContainer";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
+import { connect } from "react-redux/es/exports";
+import { initializeApp } from "./components/Redux/app-reducer";
+import React from "react";
 
-function App(props) {
-  return (
-    <BrowserRouter>
-      <div className="app-wrapper">
-        <HeaderContainer />
-        <Navbar />
-        <div className="app-wrapper-content window">
-          <Routes>
-            <Route
-              path="/profile/:userId"
-              element={
-                <ProfileContainer
-                  state={props.state.profilePage}
-                  dispatch={props.dispatch}
-                />
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <ProfileContainer
-                  state={props.state.profilePage}
-                  dispatch={props.dispatch}
-                />
-              }
-            />
+class App extends React.Component {
+  componentDidMount() {
+    this.props.initializeApp();
+  }
 
-            <Route
-              exact
-              path="/dialogs"
-              element={
-                <DialogsContainer
-                  state={props.state.dialogsPage}
-                  dispatch={props.dispatch}
-                />
-              }
-            />
-            <Route path="/news" element={<News />} />
-            <Route path="/music" element={<Music />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/users" element={<UsersContainer />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
+  render() {
+    return (
+      <BrowserRouter>
+        <div className="app-wrapper">
+          <HeaderContainer />
+          <Navbar />
+          <div className="app-wrapper-content window">
+            <Routes>
+              <Route path="/profile/:userId" element={<ProfileContainer />} />
+              <Route path="/profile" element={<ProfileContainer />} />
+
+              <Route exact path="/dialogs" element={<DialogsContainer />} />
+              <Route path="/news" element={<News />} />
+              <Route path="/music" element={<Music />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/users" element={<UsersContainer />} />
+              <Route path="/login" element={<Login />} />
+            </Routes>
+          </div>
         </div>
-      </div>
-    </BrowserRouter>
-  );
+      </BrowserRouter>
+    );
+  }
 }
 
-export default App;
+export default connect(null, { initializeApp })(App);
