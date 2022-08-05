@@ -3,7 +3,7 @@ import React from "react";
 class ProfileStatus extends React.Component {
   state = {
     editMode: false,
-    statusText: "Hi there",
+    statusText: this.props.userStatus,
   };
 
   activateEditMode = () => {

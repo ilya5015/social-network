@@ -36,6 +36,7 @@ function App(props) {
                 />
               }
             />
+
             <Route
               exact
               path="/dialogs"

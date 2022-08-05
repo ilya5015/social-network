@@ -7,9 +7,12 @@ const ProfileInfo = (props) => {
   return (
     <div>
       <div>
-        <ProfileStatus />
+        <ProfileStatus
+          userStatus={props.userStatus}
+          updateUserStatus={props.updateUserStatus}
+        />
       </div>
-      <div>{console.log(props.profile)}</div>
+      <div>{JSON.stringify(props.profile, 4, 4)}</div>
       <div className={styles.descriptionBlock}>avatar + description</div>
     </div>
   );

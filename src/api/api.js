@@ -34,6 +34,21 @@ export const profileApi = {
       return response.data;
     });
   },
+
+  getUserStatus(userId) {
+    return apiInstance.get(`profile/status/${userId}`).then((response) => {
+      console.log(response.data);
+      return response.data;
+    });
+  },
+
+  setStatus(userStatus) {
+    return apiInstance
+      .put(`profile/status`, { userStatus })
+      .then((response) => {
+        if (response.data.resultCode === 0) return response.data.data;
+      });
+  },
 };
 
 export const headerApi = {

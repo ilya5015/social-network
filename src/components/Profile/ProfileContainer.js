@@ -2,7 +2,11 @@ import React from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Profile from "./Profile";
 import { connect } from "react-redux";
-import { getUser } from "../Redux/profile-reducer";
+import {
+  getUser,
+  getUserStatus,
+  updateUserStatus,
+} from "../Redux/profile-reducer";
 import connectedWithAuthRedirect from "../../HOC/WithAuthRedirect";
 import { compose } from "redux";
 
@@ -12,35 +16,44 @@ function withRouter(Component) {
     let navigate = useNavigate();
     let params = useParams();
 
-    return <Component {...props} router={{ location, navigate, params }} />;
+    return (
+      <Component
+        {...props}
+        userId={params.userId ? params.userId : "2"}
+        router={{ location, navigate, params }}
+      />
+    );
   }
   return ComponentWithRouterProps;
 }
 
 class ProfileContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.userId = this.props.router.params.userId;
-  }
-
   componentDidMount() {
-    let userId = this.userId;
-    if (userId != null) {
-      this.props.getUser(userId);
-    }
+    console.log("PROPSSS", this.props);
+    console.log(this.props.userId);
+    this.props.getUser(this.props.userId);
+    this.props.getUserStatus(this.props.userId);
   }
 
   render() {
-    return <Profile {...this.props} profile={this.props.profile} />;
+    return (
+      <Profile
+        {...this.props}
+        profile={this.props.profile}
+        userStatus={this.props.userStatus}
+        updateUserStatus={this.props.updateUserStatus}
+      />
+    );
   }
 }
 
 let mapStateToProps = (state) => ({
   profile: state.profilePage.profile,
+  userStatus: state.profilePage.userStatus,
 });
 
 export default compose(
-  connect(mapStateToProps, { getUser }),
+  connectedWithAuthRedirect,
   withRouter,
-  connectedWithAuthRedirect
+  connect(mapStateToProps, { getUser, getUserStatus, updateUserStatus })
 )(ProfileContainer);
