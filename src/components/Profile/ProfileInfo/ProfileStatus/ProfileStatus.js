@@ -1,53 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-class ProfileStatus extends React.Component {
-  state = {
-    editMode: false,
-    statusText: this.props.userStatus,
+const ProfileStatus = ({ userStatus, updateUserStatus, myId, currentId }) => {
+  const [statusText, setStatusText] = useState("");
+  const [editMode, setEditMode] = useState(false);
+
+  useEffect(() => {
+    setStatusText(() => userStatus);
+  }, [userStatus]);
+
+  let setActivateEditMode = () => {
+    setEditMode(true);
   };
 
-  activateEditMode = () => {
-    this.setState({ editMode: true });
+  let setDeactivateEditMode = () => {
+    setEditMode(false);
   };
 
-  deactivateEditMode = () => {
-    this.setState({ editMode: false });
-  };
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.userStatus !== this.props.userStatus) {
-      this.setState({
-        statusText: this.props.userStatus,
-      });
+  let updateLocalStatusText = (status) => {
+    if (myId && !currentId) {
+      setStatusText(status);
+    } else {
+      console.log("noooope");
+      console.log(myId, currentId);
     }
-    console.log("bam");
-  }
+  };
 
-  render() {
-    return (
-      <div>
-        {!this.state.editMode ? (
-          <div
-            onDoubleClick={() => {
-              this.activateEditMode();
+  let updateStatusText = (status) => {
+    updateUserStatus(status);
+  };
+
+  return (
+    <div>
+      {!editMode ? (
+        <div
+          onDoubleClick={() => {
+            if (myId && !currentId) {
+              setActivateEditMode();
+            }
+          }}
+        >
+          {statusText}
+        </div>
+      ) : (
+        <div>
+          <input
+            value={statusText}
+            autoFocus={true}
+            onBlur={() => {
+              setDeactivateEditMode();
+              updateStatusText(statusText);
             }}
-          >
-            {this.state.statusText}
-          </div>
-        ) : (
-          <div>
-            <input
-              value={this.state.statusText}
-              autoFocus={true}
-              onBlur={() => {
-                this.deactivateEditMode();
-              }}
-            ></input>
-          </div>
-        )}
-      </div>
-    );
-  }
-}
+            onChange={(e) => {
+              updateLocalStatusText(e.target.value);
+            }}
+          ></input>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default ProfileStatus;

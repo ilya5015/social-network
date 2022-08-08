@@ -10,6 +10,8 @@ const ProfileInfo = (props) => {
         <ProfileStatus
           userStatus={props.userStatus}
           updateUserStatus={props.updateUserStatus}
+          myId={props.myId}
+          currentId={props.currentId}
         />
       </div>
       <div>{JSON.stringify(props.profile, 4, 4)}</div>

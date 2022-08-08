@@ -45,6 +45,8 @@ class ProfileContainer extends React.Component {
     let userIdFromPath = this.props.userId;
     let authorisedUserId = this.props.authorisedUserId;
 
+    console.log("Mounted", userIdFromPath, authorisedUserId);
+
     if (userIdFromPath) {
       this.props.getUser(userIdFromPath);
       this.props.getUserStatus(userIdFromPath);
@@ -56,7 +58,7 @@ class ProfileContainer extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate() {
     let userIdFromPath = this.props.userId;
     let authorisedUserId = this.props.authorisedUserId;
     let isShowMyProfile = this.state.isShowMyProfile;
@@ -84,6 +86,8 @@ class ProfileContainer extends React.Component {
         profile={this.props.profile}
         userStatus={this.props.userStatus}
         updateUserStatus={this.props.updateUserStatus}
+        currentId={this.props.userId}
+        myId={this.props.authorisedUserId}
       />
     );
   }

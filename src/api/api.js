@@ -44,7 +44,7 @@ export const profileApi = {
 
   setStatus(userStatus) {
     return apiInstance
-      .put(`profile/status`, { userStatus })
+      .put(`profile/status`, { status: userStatus })
       .then((response) => {
         if (response.data.resultCode === 0) return response.data.data;
       });
@@ -61,7 +61,7 @@ export const headerApi = {
         console.log(response);
         if (response.data.resultCode === 0) {
           console.log(response.data.data);
-          return response.data.data;
+          return response.data;
         } else {
           return false;
         }

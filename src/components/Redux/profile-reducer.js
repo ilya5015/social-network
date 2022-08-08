@@ -95,7 +95,7 @@ export const updateUserStatus = (userStatus) => {
   return (dispatch) => {
     profileApi.setStatus(userStatus).then((data) => {
       console.log(data);
-      dispatch(setUserStatus(data));
+      dispatch(setUserStatus(userStatus));
     });
   };
 };

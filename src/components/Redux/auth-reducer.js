@@ -28,8 +28,9 @@ export const setAuthUserData = (data) => ({ type: SET_USER_DATA, data: data });
 export const setAuthUser = () => {
   return (dispatch) => {
     return headerApi.getAuthUser().then((data) => {
+      console.log("authUser data is:", data);
       if (data !== false) {
-        dispatch(setAuthUserData(data));
+        dispatch(setAuthUserData(data.data));
       }
     });
   };
