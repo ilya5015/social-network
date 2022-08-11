@@ -4,21 +4,20 @@ const ADD_POST = "ADD-POST";
 const ADD_POST_MESSAGE = "ADD-POST-MESSAGE";
 const SET_USER_PROFILE = "SET-USER-PROFILE";
 const SET_USER_STATUS = "SET-USER-STATUS";
-const UPDATE_USER_STATUS = "UPDATE-USER-STATUS";
 
 let initialState = {
   postData: [
     {
       id: 1,
       message: "Hi there, how are you ?",
-      likeCounter: "40",
-      dislikeCounter: "20",
+      likeCounter: 40,
+      dislikeCounter: 20,
     },
     {
       id: 2,
       message: "It`s my first post",
-      likeCounter: "30",
-      dislikeCounter: "10",
+      likeCounter: 30,
+      dislikeCounter: 10,
     },
   ],
   newPostText: "",
@@ -69,10 +68,6 @@ export const setUserProfile = (profile) => {
 
 export const setUserStatus = (userStatus) => {
   return { type: SET_USER_STATUS, userStatus };
-};
-
-export const updateStatus = () => {
-  return { type: UPDATE_USER_STATUS };
 };
 
 export const getUser = (userId) => {

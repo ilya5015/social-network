@@ -1,0 +1,13 @@
+.profile-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.profile-header__avatar {
+  border-radius: 10px;
+}
+
+.profile-header__status {
+  padding: 10px;
+  
+}
