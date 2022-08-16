@@ -1,8 +1,34 @@
 import styles from "./Dialogs.module.css";
-import { createRef } from "react";
+import { createRef, useEffect, useState } from "react";
 
 import DialogItem from "./DialogItem/DialogItem";
 import DialogMessage from "./DialogMessage/DialogMessage";
+import UsersContainer from "../Users/UsersContainer";
+
+const ws = new WebSocket(
+  "wss://social-network.samuraijs.com/handlers/ChatHandler.ashx"
+);
+
+const Chat = () => {
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    ws.addEventListener("message", (event) => {
+      console.log(event);
+      setMessages((prevState) => JSON.parse(event.data));
+    });
+  }, []);
+
+  return (
+    <div className={styles.chatContainer}>
+      {messages.map((message) => (
+        <li>
+          <div className={styles.messageContainer}>{message.message}</div>
+        </li>
+      ))}
+    </div>
+  );
+};
 
 const Dialogs = (props) => {
   let dialogsElements = props.dialogsData.map((dialogItem) => {
@@ -36,9 +62,9 @@ const Dialogs = (props) => {
       <ul className="tree-view">
         <div className={styles.dialogsItems}>{dialogsElements}</div>
       </ul>
-      <ul className="tree-view">
-        <div className={styles.dialogMessages}>{messagesElements}</div>
-      </ul>
+
+      <Chat />
+
       <button onClick={sendMessage}>Send</button>
       <div className="field-row-stacked">
         <textarea
