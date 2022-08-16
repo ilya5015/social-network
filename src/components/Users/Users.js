@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import Paginator from "../common/Paginator/Paginator";
 import styles from "./Users.module.css";
 
 const Users = (props) => {
@@ -10,21 +11,13 @@ const Users = (props) => {
 
   return (
     <div>
-      <div>
-        {pages.map((page) => {
-          return (
-            <span
-              className={
-                props.currentPage === page ? styles.selectedPage : styles.page
-              }
-              onClick={() => {
-                props.onPageChanged(page);
-              }}
-            >
-              {page}
-            </span>
-          );
-        })}
+      <div className="Paginator">
+        <Paginator
+          elems={pages}
+          currentPage={props.currentPage}
+          portionSize={props.pageSize}
+          onPageChanged={props.onPageChanged}
+        />
       </div>
 
       <div>

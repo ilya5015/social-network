@@ -1,0 +1,29 @@
+.page {
+    color: black;
+    font-weight: 600;
+}
+
+.selectedPage {
+    color: red;
+    font-weight: bold;
+}
+
+.status-bar-field__page {
+    font-size: medium;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.status-bar-field__page:hover {
+    cursor: pointer;
+}
+
+.status-bar-field__controll-btn {
+    font-size: large;
+}
+
+.status-bar-field__controll-btn:hover {
+    cursor: pointer;
+    font-weight: bold;
+    color: rgb(255, 115, 0);
+}
