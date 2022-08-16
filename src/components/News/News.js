@@ -1,5 +1,11 @@
+import LoginForm from "../forms/LoginForm";
+
 const News = () => {
-  return <div>News</div>;
+  return (
+    <div>
+      <LoginForm />
+    </div>
+  );
 };
 
 export default News;
