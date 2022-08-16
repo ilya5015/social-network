@@ -1,9 +1,9 @@
-import LoginForm from "../forms/LoginForm";
+import LoginFormContainer from "../forms/LoginFormContainer";
 
 const News = () => {
   return (
     <div>
-      <LoginForm />
+      <LoginFormContainer />
     </div>
   );
 };

@@ -36,4 +36,12 @@ export const setAuthUser = () => {
   };
 };
 
+export const loginUser = (loginData) => {
+  return (dispatch) => {
+    return headerApi.login(loginData).then((data) => {
+      console.log("User logged in !", data);
+    });
+  };
+};
+
 export default authReducer;

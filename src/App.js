@@ -7,10 +7,11 @@ import { Suspense } from "react";
 import UsersContainer from "./components/Users/UsersContainer";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import Login from "./components/Login/Login";
 import { connect } from "react-redux/es/exports";
 import { initializeApp } from "./components/Redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
+import LoginForm from "./components/forms/LoginForm";
+import LoginFormContainer from "./components/forms/LoginFormContainer";
 
 const News = React.lazy(() => import("./components/News/News"));
 const Music = React.lazy(() => import("./components/Music/Music"));
@@ -50,7 +51,7 @@ class App extends React.Component {
                   <Route path="/music" element={<Music />} />
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/users" element={<UsersContainer />} />
-                  <Route path="/login" element={<Login />} />
+                  <Route path="/login" element={<LoginFormContainer />} />
                 </Routes>
               </div>
             </div>

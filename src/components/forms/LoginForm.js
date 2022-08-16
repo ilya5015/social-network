@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-const LoginForm = () => {
+const LoginForm = (props) => {
   const { register, handleSubmit } = useForm({
     email: "",
     password: "",
@@ -12,6 +12,7 @@ const LoginForm = () => {
       <form
         onSubmit={handleSubmit((data) => {
           console.log(data);
+          props.loginUser(data);
         })}
       >
         <input

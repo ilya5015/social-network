@@ -67,4 +67,20 @@ export const headerApi = {
         }
       });
   },
+  login(loginData) {
+    return apiInstance
+      .post(`auth/login`, {
+        email: loginData.email,
+        password: loginData.password,
+        rememberMe: loginData.rememberMe,
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.data.resultCode === 0) {
+          console.log(response.data.data);
+        } else {
+          return response.data.messages;
+        }
+      });
+  },
 };
