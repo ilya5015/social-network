@@ -1,72 +1,61 @@
-import styles from "./Navbar.module.css";
+import "./Navbar.css";
 import { NavLink } from "react-router-dom";
+import { AppBar, Toolbar, IconButton, Drawer } from "@mui/material";
 
 const Navbar = () => {
   return (
-    <ul className="tree-view">
-      <nav className={`${styles.nav}`}>
-        <div className={`${styles.navItem}`}>
+    <div className="nav">
+      <nav className="nav">
+        <div className="nav-item">
           <NavLink
             to="/profile"
-            className={({ isActive }) =>
-              isActive ? styles.active : styles.navItem
-            }
+            className={({ isActive }) => (isActive ? "active" : "nav-item")}
           >
             Profile
           </NavLink>
         </div>
-        <div className={`${styles.navItem}`}>
+        <div className="nav-item">
           <NavLink
             to="/dialogs"
-            className={({ isActive }) =>
-              isActive ? styles.active : styles.navItem
-            }
+            className={({ isActive }) => (isActive ? "active" : "nav-item")}
           >
             Messages
           </NavLink>
         </div>
-        <div className={`${styles.navItem}`}>
+        <div className={`${"nav-item"}`}>
           <NavLink
             to="news"
-            className={({ isActive }) =>
-              isActive ? styles.active : styles.navItem
-            }
+            className={({ isActive }) => (isActive ? "nav-item" : "nav-item")}
           >
             News
           </NavLink>
         </div>
-        <div className={`${styles.navItem}`}>
+        <div className={`${"nav-item"}`}>
           <NavLink
             to="music"
-            className={({ isActive }) =>
-              isActive ? styles.active : styles.navItem
-            }
+            className={({ isActive }) => (isActive ? "nav-item" : "nav-item")}
           >
             Music
           </NavLink>
         </div>
-        <div className={`${styles.navItem}`}>
+        <div className={`${"nav-item"}`}>
           <NavLink
             to="settings"
-            className={({ isActive }) =>
-              isActive ? styles.active : styles.navItem
-            }
+            className={({ isActive }) => (isActive ? "nav-item" : "nav-item")}
           >
             Settings
           </NavLink>
         </div>
-        <div className={`${styles.navItem}`}>
+        <div className={`${"nav-item"}`}>
           <NavLink
             to="users"
-            className={({ isActive }) =>
-              isActive ? styles.active : styles.navItem
-            }
+            className={({ isActive }) => (isActive ? "nav-item" : "nav-item")}
           >
             Users
           </NavLink>
         </div>
       </nav>
-    </ul>
+    </div>
   );
 };
 

@@ -1,6 +1,5 @@
 .header {
-  grid-area: h;
-  background: linear-gradient(90deg, #010081, #4253a9, #8193ee);
+  background-color: #F19CBB;
 }
 
 .logo .logoText {

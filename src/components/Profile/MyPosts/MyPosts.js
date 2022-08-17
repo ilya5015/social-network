@@ -1,8 +1,11 @@
 import styles from "./MyPosts.module.css";
 import Post from "./Post/Post";
-import { createRef } from "react";
+import { Button, TextField } from "@mui/material";
+import { useRef, useState } from "react";
 
 const MyPosts = (props) => {
+  const [newPostText, setNewPostText] = useState("");
+
   let postElements = props.postData.map((post) => {
     return (
       <Post
@@ -14,15 +17,14 @@ const MyPosts = (props) => {
     );
   });
 
-  let newPost = createRef();
+  const newPost = useRef("");
 
-  let onPostChange = () => {
-    let postMessage = newPost.current.value;
-    props.addPostMessage(postMessage);
+  let onPostChange = (postText) => {
+    setNewPostText(postText);
   };
 
   let postPost = () => {
-    props.addPost();
+    props.addPost(newPostText);
     newPost.current.value = "";
   };
 
@@ -31,9 +33,26 @@ const MyPosts = (props) => {
       my posts
       <div>
         <div className="field-row-stacked">
-          <textarea onChange={onPostChange} ref={newPost} rows="8"></textarea>
+          <TextField
+            id="outlined-multiline-static"
+            label="Post text"
+            multiline
+            variant="filled"
+            rows={4}
+            onChange={() => {
+              onPostChange(newPost.current.value);
+            }}
+            inputRef={newPost}
+          />
         </div>
-        <button onClick={postPost}>Add new post</button>
+        <Button
+          variant="contained"
+          onClick={() => {
+            postPost();
+          }}
+        >
+          Add new post
+        </Button>
       </div>
       <div className={styles.posts}>{postElements}</div>
     </div>

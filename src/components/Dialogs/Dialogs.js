@@ -3,7 +3,6 @@ import { createRef, useEffect, useState } from "react";
 
 import DialogItem from "./DialogItem/DialogItem";
 import DialogMessage from "./DialogMessage/DialogMessage";
-import UsersContainer from "../Users/UsersContainer";
 
 const ws = new WebSocket(
   "wss://social-network.samuraijs.com/handlers/ChatHandler.ashx"
@@ -21,9 +20,12 @@ const Chat = () => {
 
   return (
     <div className={styles.chatContainer}>
+      <div>{JSON.stringify(messages, 4, 4)}</div>
       {messages.map((message) => (
         <li>
-          <div className={styles.messageContainer}>{message.message}</div>
+          <div className={styles.messageContainer}>
+            <span>{message.message}</span>
+          </div>
         </li>
       ))}
     </div>

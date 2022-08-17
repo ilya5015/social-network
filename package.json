@@ -4,6 +4,10 @@
   "homepage": "https://ilya5015.github.io/social-network",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@material-ui/icons": "^4.11.3",
+    "@mui/material": "^5.10.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",

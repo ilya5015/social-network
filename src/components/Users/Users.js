@@ -13,7 +13,7 @@ const Users = (props) => {
     <div>
       <div className="Paginator">
         <Paginator
-          elems={pages}
+          pages={pages}
           currentPage={props.currentPage}
           portionSize={props.pageSize}
           onPageChanged={props.onPageChanged}

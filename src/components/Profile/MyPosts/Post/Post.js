@@ -1,10 +1,11 @@
 import styles from "./Post.module.css";
 import avatar from "./avatar.jpg";
+import Avatar from "@mui/material/Avatar";
 
 const Post = (props) => {
   return (
     <div className={styles.post}>
-      <img src={avatar} />
+      <Avatar alt="user" sx={{ width: 200, height: 200 }} src={avatar} />
       {props.message}
       <div>
         <span>LIKE</span>:{props.likeCounter}

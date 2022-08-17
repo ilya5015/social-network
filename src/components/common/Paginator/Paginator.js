@@ -1,7 +1,8 @@
+import { Pagination } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./Paginator.css";
 
-const Paginator = ({ elems, currentPage, portionSize, onPageChanged }) => {
+const Paginator = ({ pages, currentPage, portionSize, onPageChanged }) => {
   const [portion, setPortion] = useState([]);
   const [rightBorder, setRightBorder] = useState();
   const [leftBorder, setLeftBorder] = useState();
@@ -16,56 +17,29 @@ const Paginator = ({ elems, currentPage, portionSize, onPageChanged }) => {
   }, [leftBorder, portionSize]);
 
   useEffect(() => {
-    let newPortion = elems.filter(
-      (elem) => elem >= leftBorder && elem <= rightBorder
+    let newPortion = pages.filter(
+      (page) => page >= leftBorder && page <= rightBorder
     );
     setPortion(newPortion);
-  }, [leftBorder, rightBorder, elems]);
+  }, [leftBorder, rightBorder, pages]);
+
+  let onPaginationElemClick = (event) => {
+    onPageChanged(event.target.innerText);
+  };
 
   return (
     <div>
+      <br />
+      <br />
+      <br />
+      <br />
       <div className={"window"} style={{ width: "320px" }}>
-        <div class="title-bar">
-          <div class="title-bar-text">Users list</div>
-        </div>
-
-        <div className="status-bar">
-          <div
-            className="status-bar-field status-bar-field__controll-btn"
-            onClick={() =>
-              leftBorder - portionSize > 0
-                ? setLeftBorder(leftBorder - portionSize)
-                : setLeftBorder(1)
-            }
-          >
-            Prev
-          </div>
-          {portion.map((page) => {
-            return (
-              <div className="status-bar-field status-bar-field__page">
-                <span
-                  className={currentPage === page ? "selectedPage" : "page"}
-                  onClick={() => {
-                    onPageChanged(page);
-                  }}
-                >
-                  {page}
-                </span>
-              </div>
-            );
-          })}
-
-          <div
-            className="status-bar-field status-bar-field__controll-btn"
-            onClick={() =>
-              rightBorder + portionSize <= elems[elems.length - 1]
-                ? setLeftBorder(leftBorder + portionSize)
-                : setLeftBorder(elems[elems.length - 1])
-            }
-          >
-            Next
-          </div>
-        </div>
+        <Pagination
+          count={`${pages.length}`}
+          onClick={(e) => {
+            onPaginationElemClick(e);
+          }}
+        />
       </div>
     </div>
   );

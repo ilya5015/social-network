@@ -1,0 +1,14 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.nav-item {
+  color: #F19CBB;
+  font-size: x-large;
+}
+
+.navItem a.active {
+  text-decoration: none;
+}

@@ -1,8 +1,6 @@
 import React from "react";
 import "./App.css";
-import Navbar from "./components/Navbar/Navbar";
 import ProfileContainer from "./components/Profile/ProfileContainer";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import { Suspense } from "react";
 import UsersContainer from "./components/Users/UsersContainer";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
@@ -10,12 +8,14 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import { connect } from "react-redux/es/exports";
 import { initializeApp } from "./components/Redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
-import LoginForm from "./components/forms/LoginForm";
 import LoginFormContainer from "./components/forms/LoginFormContainer";
 
 const News = React.lazy(() => import("./components/News/News"));
 const Music = React.lazy(() => import("./components/Music/Music"));
 const Settings = React.lazy(() => import("./components/Settings/Settings"));
+const DialogsContainer = React.lazy(() =>
+  import("./components/Dialogs/DialogsContainer")
+);
 
 class App extends React.Component {
   componentDidMount() {
@@ -37,7 +37,6 @@ class App extends React.Component {
           <BrowserRouter>
             <div className="app-wrapper">
               <HeaderContainer />
-              <Navbar />
               <div className="app-wrapper-content window">
                 <Routes>
                   <Route
@@ -45,7 +44,6 @@ class App extends React.Component {
                     element={<ProfileContainer />}
                   />
                   <Route path="/profile" element={<ProfileContainer />} />
-
                   <Route exact path="/dialogs" element={<DialogsContainer />} />
                   <Route path="/news" element={<News />} />
                   <Route path="/music" element={<Music />} />

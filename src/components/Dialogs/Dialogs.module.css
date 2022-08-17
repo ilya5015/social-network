@@ -30,8 +30,3 @@
   border-radius: 7px;
   background-color: rgb(227, 227, 227);
 }
-
-.chatContainer {
-  height: 500px;
-  overflow-y: scroll;
-}

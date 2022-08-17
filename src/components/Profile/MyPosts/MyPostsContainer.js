@@ -1,4 +1,4 @@
-import { addPost, addPostMessage } from "../../Redux/profile-reducer";
+import { addPost } from "../../Redux/profile-reducer";
 import MyPosts from "./MyPosts";
 
 import { connect } from "react-redux";
@@ -12,7 +12,6 @@ let mapStateToProps = (state) => {
 
 const SuperMyPostsContainer = connect(mapStateToProps, {
   addPost,
-  addPostMessage,
 })(MyPosts);
 
 export default SuperMyPostsContainer;
