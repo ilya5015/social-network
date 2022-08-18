@@ -8,3 +8,7 @@
 .app-wrapper-content {
   background-color: #FFCBDB;
 }
+
+.app-wrapper-content.window {
+  padding: 40px;
+}

@@ -9,6 +9,7 @@ import { connect } from "react-redux/es/exports";
 import { initializeApp } from "./components/Redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 import LoginFormContainer from "./components/forms/LoginFormContainer";
+import { Paper } from "@mui/material";
 
 const News = React.lazy(() => import("./components/News/News"));
 const Music = React.lazy(() => import("./components/Music/Music"));
@@ -37,20 +38,27 @@ class App extends React.Component {
           <BrowserRouter>
             <div className="app-wrapper">
               <HeaderContainer />
+
               <div className="app-wrapper-content window">
-                <Routes>
-                  <Route
-                    path="/profile/:userId"
-                    element={<ProfileContainer />}
-                  />
-                  <Route path="/profile" element={<ProfileContainer />} />
-                  <Route exact path="/dialogs" element={<DialogsContainer />} />
-                  <Route path="/news" element={<News />} />
-                  <Route path="/music" element={<Music />} />
-                  <Route path="/settings" element={<Settings />} />
-                  <Route path="/users" element={<UsersContainer />} />
-                  <Route path="/login" element={<LoginFormContainer />} />
-                </Routes>
+                <Paper elevation={3}>
+                  <Routes>
+                    <Route
+                      path="/profile/:userId"
+                      element={<ProfileContainer />}
+                    />
+                    <Route path="/profile" element={<ProfileContainer />} />
+                    <Route
+                      exact
+                      path="/dialogs"
+                      element={<DialogsContainer />}
+                    />
+                    <Route path="/news" element={<News />} />
+                    <Route path="/music" element={<Music />} />
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/users" element={<UsersContainer />} />
+                    <Route path="/login" element={<LoginFormContainer />} />
+                  </Routes>
+                </Paper>
               </div>
             </div>
           </BrowserRouter>
