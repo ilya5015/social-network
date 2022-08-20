@@ -9,6 +9,7 @@ import profileReducer from "./profile-reducer";
 import usersReducer from "./users-reducer";
 import thunk from "redux-thunk";
 import appReducer from "./app-reducer";
+import chatReducer from "./chat-reducer";
 
 let reducers = combineReducers({
   profilePage: profileReducer,
@@ -16,6 +17,7 @@ let reducers = combineReducers({
   usersPage: usersReducer,
   authReducer: authReducer,
   appReducer: appReducer,
+  chatReducer: chatReducer,
 });
 
 let store = createStore(reducers, applyMiddleware(thunk));

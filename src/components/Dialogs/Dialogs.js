@@ -1,68 +1,37 @@
 import styles from "./Dialogs.module.css";
-import { createRef, useEffect, useState } from "react";
-
+import { createRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ThunkDispatch } from "redux-thunk";
 import DialogItem from "./DialogItem/DialogItem";
 import DialogMessage from "./DialogMessage/DialogMessage";
+import {
+  startMessagesListening,
+  stopMessagesListening,
+} from "../Redux/chat-reducer";
 
 const Chat = () => {
-  const [webSocket, setWebSocket] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    createChannel();
-  }, []);
-
-  useEffect(() => {
-    console.log("WEB SOCKET IS", webSocket);
-    if (webSocket !== null) {
-      webSocket?.addEventListener("close", closeEventListener);
-    }
+    dispatch(startMessagesListening());
     return () => {
-      console.log("where u goin");
-      webSocket?.removeEventListener("close", closeEventListener);
+      stopMessagesListening();
     };
-  }, [webSocket]);
-
-  let createChannel = () => {
-    let ws = new WebSocket(
-      "wss://social-network.samuraijs.com/handlers/ChatHandler.ashx"
-    );
-    setWebSocket(ws);
-  };
-
-  let closeEventListener = () => {
-    console.log("WS CLOSED, RECONNECTING...");
-    createChannel();
-  };
+  }, []);
 
   return (
     <div className={styles.chatContainer}>
-      <ChatMessages webSocket={webSocket} />
+      <ChatMessages />
     </div>
   );
 };
 
-const ChatMessages = ({ webSocket }) => {
-  const [messages, setMessages] = useState([]);
-
-  useEffect(() => {
-    webSocket?.addEventListener("message", (event) =>
-      messageEventListener(event)
-    );
-
-    return () => {
-      webSocket?.removeEventListener("message", messageEventListener);
-    };
-  }, [webSocket]);
-
-  let messageEventListener = (event) => {
-    console.log(event);
-    setMessages((prevState) => JSON.parse(event.data));
-  };
-
+const ChatMessages = () => {
+  const messages = useSelector((state) => state.chatReducer.messages);
   return (
     <div>
       <div>{JSON.stringify(messages, 4, 4)}</div>
-      {messages.map((message) => (
+      {messages?.map((message) => (
         <li>
           <div className={styles.messageContainer}>
             <span>{message.message}</span>
