@@ -25,8 +25,8 @@ export const setInitialized = () => {
   return { type: SET_INITIALIZED };
 };
 
-export const initializeApp = () => (dispatch) => {
-  dispatch(setAuthUser()).then(() => {
+export const initializeApp = () => async (dispatch) => {
+  await dispatch(setAuthUser()).then(() => {
     dispatch(setInitialized());
   });
 };

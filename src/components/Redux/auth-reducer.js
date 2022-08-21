@@ -26,18 +26,17 @@ const authReducer = (state = initialState, action) => {
 export const setAuthUserData = (data) => ({ type: SET_USER_DATA, data: data });
 
 export const setAuthUser = () => {
-  return (dispatch) => {
-    return headerApi.getAuthUser().then((data) => {
-      console.log("authUser data is:", data);
-      if (data !== false) {
-        dispatch(setAuthUserData(data.data));
-      }
-    });
+  return async (dispatch) => {
+    let data = await headerApi.getAuthUser();
+    console.log("authUser data is:", data);
+    if (data !== false) {
+      dispatch(setAuthUserData(data.data));
+    }
   };
 };
 
 export const loginUser = (loginData) => {
-  return (dispatch) => {
+  return () => {
     return headerApi.login(loginData).then((data) => {
       console.log("User logged in !", data);
     });
