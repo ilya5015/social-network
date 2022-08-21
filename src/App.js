@@ -10,6 +10,7 @@ import { initializeApp } from "./components/Redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 import LoginFormContainer from "./components/forms/LoginFormContainer";
 import { Paper } from "@mui/material";
+import { Navigate } from "react-router-dom";
 
 const News = React.lazy(() => import("./components/News/News"));
 const Music = React.lazy(() => import("./components/Music/Music"));
@@ -18,9 +19,16 @@ const DialogsContainer = React.lazy(() =>
   import("./components/Dialogs/DialogsContainer")
 );
 
+let onUnhandledRejectionEvent = (event) => {
+  console.log("Error uccured", event);
+};
+
 class App extends React.Component {
   componentDidMount() {
     this.props.initializeApp();
+    window.addEventListener("unhandledrejection", (e) =>
+      onUnhandledRejectionEvent(e)
+    );
   }
 
   render() {
@@ -42,6 +50,7 @@ class App extends React.Component {
               <div className="app-wrapper-content window">
                 <Paper elevation={3}>
                   <Routes>
+                    <Route path="/" element={<Navigate to="/profile" />} />
                     <Route
                       path="/profile/:userId"
                       element={<ProfileContainer />}
