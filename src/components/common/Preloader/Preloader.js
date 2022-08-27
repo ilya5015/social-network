@@ -1,7 +1,7 @@
 import React from "react";
 import preloader from "../../../assets/preloader.gif";
 
-const Preloader = (props) => {
+const Preloader = () => {
   return <div>{<img src={preloader} style={{ width: "100px" }} />}</div>;
 };
 

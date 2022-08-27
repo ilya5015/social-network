@@ -1,9 +1,33 @@
+import React from "react";
 import { NavLink } from "react-router-dom";
 import Paginator from "../common/Paginator/Paginator";
-import styles from "./Users.module.css";
 
-const Users = (props) => {
-  let pagesCount = Math.ceil(props.totalUsers / props.pageSize);
+type Props = {
+  totalUsers: number,
+  pageSize: number,
+  currentPage: number,
+  onPageChanged: (page: number) => void,
+  users: Array<user>,
+  followingInProgressUsers: Array<number>,
+  unfollow: (userId: number) => void,
+  follow: (userId: number) => void
+}
+
+type user = {
+  id: number,
+  name: string,
+  status?: string,
+  photos: photos,
+  followed: boolean
+}
+
+type photos = {
+  small?: string,
+  large?: string
+}
+
+const Users = ({totalUsers, pageSize, currentPage, onPageChanged, users, followingInProgressUsers, unfollow, follow} : Props) => {
+  let pagesCount = Math.ceil(totalUsers / pageSize);
   let pages = [];
   for (let i = 1; i <= pagesCount; i++) {
     pages.push(i);
@@ -14,14 +38,14 @@ const Users = (props) => {
       <div className="Paginator">
         <Paginator
           pages={pages}
-          currentPage={props.currentPage}
-          portionSize={props.pageSize}
-          onPageChanged={props.onPageChanged}
+          currentPage={currentPage}
+          portionSize={pageSize}
+          onPageChanged={onPageChanged}
         />
       </div>
 
       <div>
-        {props.users.map((user) => (
+        {users.map((user) => (
           <div key={user.id}>
             <span>
               <div>
@@ -41,22 +65,22 @@ const Users = (props) => {
               <div>
                 {user.followed ? (
                   <button
-                    disabled={props.followingInProgressUsers.some(
+                    disabled={followingInProgressUsers.some(
                       (userId) => user.id === userId
                     )}
                     onClick={() => {
-                      props.unfollow(user.id);
+                      unfollow(user.id);
                     }}
                   >
                     Unfollow
                   </button>
                 ) : (
                   <button
-                    disabled={props.followingInProgressUsers.some(
+                    disabled={followingInProgressUsers.some(
                       (userId) => user.id === userId
                     )}
                     onClick={() => {
-                      props.follow(user.id);
+                      follow(user.id);
                     }}
                   >
                     Follow
