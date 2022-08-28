@@ -1,6 +1,6 @@
-let subscribers = [];
+let subscribers: Array<any> = [];
 
-let ws = null;
+let ws: null|WebSocket = null;
 
 let createChannel = () => {
   if (ws === null) {
@@ -17,7 +17,7 @@ let onCloseEventHandler = () => {
   setTimeout(createChannel, 3000);
 };
 
-let onMessageEventHadler = (e) => {
+let onMessageEventHadler = (e: any) => {
   let newMessages = JSON.parse(e.data);
   subscribers.forEach((subscriber) => subscriber(newMessages));
 };
@@ -31,13 +31,13 @@ export const chatApi = {
     ws?.removeEventListener("message", onMessageEventHadler);
     ws?.close();
   },
-  subscribeNewMessages(callback) {
+  subscribeNewMessages(callback: any) {
     subscribers.push(callback);
     return () => {
       subscribers = subscribers.filter((subscriber) => subscriber !== callback);
     };
   },
-  sendMessage(message) {
+  sendMessage(message: string) {
     ws?.send(message);
   },
 };

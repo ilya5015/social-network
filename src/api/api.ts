@@ -15,13 +15,13 @@ export const usersApi = {
       });
   },
 
-  followUser(userId) {
+  followUser(userId: number) {
     return apiInstance.post(`follow/${userId}`).then((response) => {
       return response.data;
     });
   },
 
-  unfollowUser(userId) {
+  unfollowUser(userId: number) {
     return apiInstance.delete(`follow/${userId}`).then((response) => {
       return response.data;
     });
@@ -29,20 +29,20 @@ export const usersApi = {
 };
 
 export const profileApi = {
-  getUser(userId) {
+  getUser(userId: number) {
     return apiInstance.get(`profile/${userId}`).then((response) => {
       return response.data;
     });
   },
 
-  getUserStatus(userId) {
+  getUserStatus(userId: number) {
     return apiInstance.get(`profile/status/${userId}`).then((response) => {
       console.log(response.data);
       return response.data;
     });
   },
 
-  setStatus(userStatus) {
+  setStatus(userStatus: string) {
     return apiInstance
       .put(`profile/status`, { status: userStatus })
       .then((response) => {
@@ -67,7 +67,7 @@ export const headerApi = {
         }
       });
   },
-  login(loginData) {
+  login(loginData: any) {
     return apiInstance
       .post(`auth/login`, {
         email: loginData.email,
