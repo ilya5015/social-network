@@ -1,37 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import Paginator from "../common/Paginator/Paginator";
 
-type Props = {
-  totalUsers: number,
-  pageSize: number,
-  currentPage: number,
-  onPageChanged: (page: number) => void,
-  users: Array<user>,
-  followingInProgressUsers: Array<number>,
-  unfollow: (userId: number) => void,
-  follow: (userId: number) => void
-}
+const Users = ({
+  totalUsers,
+  pageSize,
+  currentPage,
+  onPageChanged,
+  users,
+  followingInProgressUsers,
+  unfollow,
+  follow,
+}) => {
+  const [pages, setPages] = useState([]);
 
-type user = {
-  id: number,
-  name: string,
-  status?: string,
-  photos: photos,
-  followed: boolean
-}
-
-type photos = {
-  small?: string,
-  large?: string
-}
-
-const Users = ({totalUsers, pageSize, currentPage, onPageChanged, users, followingInProgressUsers, unfollow, follow} : Props) => {
-  let pagesCount = Math.ceil(totalUsers / pageSize);
-  let pages = [];
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(i);
-  }
+  useEffect(() => {
+    let pagesCount = Math.ceil(totalUsers / pageSize);
+    let pages = [];
+    for (let i = 1; i <= pagesCount; i++) {
+      pages.push(i);
+    }
+    setPages(pages);
+  }, [totalUsers, pageSize]);
 
   return (
     <div>
@@ -45,7 +35,7 @@ const Users = ({totalUsers, pageSize, currentPage, onPageChanged, users, followi
       </div>
 
       <div>
-        {users.map((user) => (
+        {users?.map((user) => (
           <div key={user.id}>
             <span>
               <div>

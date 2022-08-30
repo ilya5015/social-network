@@ -34,7 +34,7 @@ let initialState: InitialStateType = {
   isAuth: false,
 };
 
-const authReducer = (state = initialState, action: ActionType) : InitialStateType => {
+const authReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case SET_USER_DATA:
       return {
@@ -47,7 +47,7 @@ const authReducer = (state = initialState, action: ActionType) : InitialStateTyp
   }
 };
 
-export const setAuthUserData = (data: any) : SetUserDataActionType => ({ type: SET_USER_DATA, data});
+export const setAuthUserData = (data: any) => ({ type: SET_USER_DATA, data});
 
 export const setAuthUser = () => {
   return async (dispatch : any) => {

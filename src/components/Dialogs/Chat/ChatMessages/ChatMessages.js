@@ -1,9 +1,9 @@
-import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useAppSelector } from "../../../../hooks/hooks";
 import styles from "../../Dialogs.module.css";
 import AddMessageForm from "../AddMessageForm/AddMessageForm";
 
 const ChatMessages = () => {
-  const messages = useSelector((state) => state.chatReducer.messages);
+  const messages = useAppSelector((state) => state.chatReducer.messages);
   return (
     <div>
       <div>

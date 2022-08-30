@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux/es/exports";
+import { useAppDispatch } from "../../../hooks/hooks";
 import { useEffect } from "react";
 import {
   startMessagesListening,
@@ -8,7 +8,7 @@ import styles from "../Dialogs.module.css";
 import ChatMessages from "./ChatMessages/ChatMessages";
 
 const Chat = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(startMessagesListening());

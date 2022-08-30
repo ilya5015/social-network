@@ -8,7 +8,16 @@ const SET_TOTAL_USERS = "SET-TOTAL-USERS";
 const TOGGLE_IS_FETCHING = "TOGGLE-IS-FETCHING";
 const TOGGLE_FOLLOWING_PROCESS = "TOGGLE-FOLLOWING-PROCESS";
 
-let initialState = {
+type InitialStateType = {
+  users: Array<any>,
+  pageSize: number,
+  totalUsers: number,
+  currentPage: number,
+  isFetching: boolean,
+  followingInProgressUsers: Array<any>
+}
+
+let initialState: InitialStateType = {
   users: [],
   pageSize: 5,
   totalUsers: 0,
@@ -17,7 +26,7 @@ let initialState = {
   followingInProgressUsers: [],
 };
 
-const usersReducer = (state = initialState, action) => {
+const usersReducer = (state = initialState, action:any) => {
   switch (action.type) {
     case FOLLOW:
       return {
@@ -75,30 +84,30 @@ const usersReducer = (state = initialState, action) => {
   }
 };
 
-export const followSucceeded = (userId) => {
+export const followSucceeded = (userId:any) => {
   return { type: FOLLOW, userId };
 };
-export const unfollowSucceeded = (userId) => {
+export const unfollowSucceeded = (userId:any) => {
   return { type: UNFOLLOW, userId };
 };
-export const setUsers = (users) => {
+export const setUsers = (users:any) => {
   return { type: SET_USERS, users };
 };
-export const setCurrentPage = (currentPage) => {
+export const setCurrentPage = (currentPage:any) => {
   return { type: SET_CURRENT_PAGE, currentPage };
 };
-export const setTotalUsers = (totalUsers) => {
+export const setTotalUsers = (totalUsers:any) => {
   return { type: SET_TOTAL_USERS, totalUsers };
 };
-export const toggleIsFetching = (isFetching) => {
+export const toggleIsFetching = (isFetching:any) => {
   return { type: TOGGLE_IS_FETCHING, isFetching };
 };
-export const toggleFollowingProcess = (isFetching, userId) => {
+export const toggleFollowingProcess = (isFetching:any, userId:any) => {
   return { type: TOGGLE_FOLLOWING_PROCESS, isFetching, userId };
 };
 
-export const getUsers = (currentPage, pageSize) => {
-  return async (dispatch) => {
+export const getUsers = (currentPage:any, pageSize:any) => {
+  return async (dispatch:any) => {
     dispatch(toggleIsFetching(true));
     let data = await usersApi.getUsers(currentPage, pageSize);
     dispatch(toggleIsFetching(false));
@@ -107,8 +116,8 @@ export const getUsers = (currentPage, pageSize) => {
   };
 };
 
-export const follow = (userId) => {
-  return async (dispatch) => {
+export const follow = (userId:any) => {
+  return async (dispatch:any) => {
     dispatch(toggleFollowingProcess(true, userId));
     let data = await usersApi.followUser(userId);
     if (data.resultCode === 0) {
@@ -118,8 +127,8 @@ export const follow = (userId) => {
   };
 };
 
-export const unfollow = (userId) => {
-  return async (dispatch) => {
+export const unfollow = (userId:any) => {
+  return async (dispatch:any) => {
     dispatch(toggleFollowingProcess(true, userId));
     let data = await usersApi.unfollowUser(userId);
     if (data.resultCode === 0) {
