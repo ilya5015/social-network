@@ -3,9 +3,9 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Profile from "./Profile";
 import { connect } from "react-redux";
 import {
-  getUser,
-  getUserStatus,
-  updateUserStatus,
+  thunkGetUser,
+  thunkGetUserStatus,
+  thunkUpdateUserStatus,
 } from "../Redux/profile-reducer";
 import connectedWithAuthRedirect from "../../HOC/WithAuthRedirect";
 import { compose } from "redux";
@@ -103,5 +103,9 @@ let mapStateToProps = (state) => ({
 export default compose(
   connectedWithAuthRedirect,
   withRouter,
-  connect(mapStateToProps, { getUser, getUserStatus, updateUserStatus })
+  connect(mapStateToProps, {
+    getUser: thunkGetUser,
+    getUserStatus: thunkGetUserStatus,
+    updateUserStatus: thunkUpdateUserStatus,
+  })
 )(ProfileContainer);

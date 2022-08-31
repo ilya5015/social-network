@@ -6,7 +6,7 @@ import UsersContainer from "./components/Users/UsersContainer";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import { connect } from "react-redux/es/exports";
-import { initializeApp } from "./components/Redux/app-reducer";
+import { thunkInitializeApp } from "./components/Redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 import LoginFormContainer from "./components/forms/LoginFormContainer";
 import { Paper } from "@mui/material";
@@ -81,4 +81,6 @@ let mapStateToProps = (state) => ({
   initialized: state.appReducer.initialized,
 });
 
-export default connect(mapStateToProps, { initializeApp })(App);
+export default connect(mapStateToProps, { initializeApp: thunkInitializeApp })(
+  App
+);

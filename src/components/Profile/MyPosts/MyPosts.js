@@ -17,43 +17,9 @@ const MyPosts = (props) => {
     );
   });
 
-  const newPost = useRef("");
-
-  let onPostChange = (postText) => {
-    setNewPostText(postText);
-  };
-
-  let postPost = () => {
-    props.addPost(newPostText);
-    newPost.current.value = "";
-  };
-
   return (
     <div className={styles.postsBlock}>
       my posts
-      <div>
-        <div className="field-row-stacked">
-          <TextField
-            id="outlined-multiline-static"
-            label="Post text"
-            multiline
-            variant="filled"
-            rows={4}
-            onChange={() => {
-              onPostChange(newPost.current.value);
-            }}
-            inputRef={newPost}
-          />
-        </div>
-        <Button
-          variant="contained"
-          onClick={() => {
-            postPost();
-          }}
-        >
-          Add new post
-        </Button>
-      </div>
       <div className={styles.posts}>{postElements}</div>
     </div>
   );

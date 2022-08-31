@@ -1,16 +1,15 @@
+import { createSlice } from "@reduxjs/toolkit";
 import { profileApi } from "../../api/api";
-
-const ADD_POST = "ADD-POST";
-const SET_USER_PROFILE = "SET-USER-PROFILE";
-const SET_USER_STATUS = "SET-USER-STATUS";
+import { PayloadAction } from "@reduxjs/toolkit";
+import {RootState} from './store'
+import { ThunkAction } from "redux-thunk"
+import { AnyAction } from 'redux'
 
 type InitialStateType = {
   postData: any,
-  profile: null|ProfileType,
+  profile: any,
   userStatus: string
 }
-
-type ProfileType = any
 
 let initialState: InitialStateType = {
   postData: [
@@ -31,64 +30,40 @@ let initialState: InitialStateType = {
   userStatus: "",
 };
 
-const profileReducer = (state = initialState, action: any) => {
-  switch (action.type) {
-    case ADD_POST: {
-      return {
-        ...state,
-        postData: [
-          ...state.postData,
-          {
-            id: 5,
-            message: action.newPostText,
-            likeCounter: 0,
-            dislikeCounter: 0,
-          },
-        ],
-      };
+const profileSlice = createSlice({
+  name: 'profile',
+  initialState,
+  reducers: {
+    setUserProfile: (state, action: PayloadAction<any>) => {
+      state.profile = action.payload
+    },
+    setUserStatus: (state, action: PayloadAction<string>) => {
+      state.userStatus = action.payload
     }
-    case SET_USER_PROFILE: {
-      return { ...state, profile: action.profile };
-    }
-    case SET_USER_STATUS: {
-      return { ...state, userStatus: action.userStatus };
-    }
-    default:
-      return state;
   }
-};
+})
 
-export default profileReducer;
+export const {setUserProfile, setUserStatus} = profileSlice.actions
 
-export const addPost = (newPostText: any) => {
-  return { type: ADD_POST, newPostText };
-};
+export default profileSlice.reducer;
 
-export const setUserProfile = (profile: any) => {
-  return { type: SET_USER_PROFILE, profile };
-};
-
-export const setUserStatus = (userStatus: any) => {
-  return { type: SET_USER_STATUS, userStatus };
-};
-
-export const getUser = (userId: any) => {
-  return async (dispatch: any) => {
+export const thunkGetUser = (userId: any): ThunkAction<void, RootState, unknown, AnyAction> => {
+  return async (dispatch) => {
     let data = await profileApi.getUser(userId);
     dispatch(setUserProfile(data));
   };
 };
 
-export const getUserStatus = (userId: any) => {
-  return (dispatch: any) => {
+export const thunkGetUserStatus = (userId: number): ThunkAction<void, RootState, unknown, AnyAction> => {
+  return (dispatch) => {
     profileApi.getUserStatus(userId).then((data) => {
       dispatch(setUserStatus(data));
     });
   };
 };
 
-export const updateUserStatus = (userStatus: any) => {
-  return (dispatch: any) => {
+export const thunkUpdateUserStatus = (userStatus: string):ThunkAction<void, RootState, unknown, AnyAction> => {
+  return (dispatch) => {
     profileApi.setStatus(userStatus).then((data) => {
       console.log(data);
       dispatch(setUserStatus(userStatus));

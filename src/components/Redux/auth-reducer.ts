@@ -1,6 +1,8 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { headerApi } from "../../api/api";
-
-const SET_USER_DATA = "SET-USER-DATA";
+import {RootState} from './store'
+import { ThunkAction } from "redux-thunk"
+import { AnyAction } from 'redux'
 
 type InitialStateType = {
   id: number|null,
@@ -10,20 +12,10 @@ type InitialStateType = {
   isAuth: boolean
 }
 
-type SetUserDataActionType = {
-  type: typeof SET_USER_DATA,
-  data: LoginDataType
-}
-
-type LoginDataType = {
-  login: string,
+type AuthUserDataType = {
+  id: number,
   email: string,
-  rememberMe: boolean
-}
-
-type ActionType = {
-  type: string,
-  data: any
+  login: string
 }
 
 let initialState: InitialStateType = {
@@ -34,22 +26,24 @@ let initialState: InitialStateType = {
   isAuth: false,
 };
 
-const authReducer = (state = initialState, action: any) => {
-  switch (action.type) {
-    case SET_USER_DATA:
-      return {
-        ...state,
-        ...action.data,
-        isAuth: true,
-      };
-    default:
-      return state;
+const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    setAuthUserData: (state, action: PayloadAction<AuthUserDataType>) => {
+      state.id = action.payload.id
+      state.email = action.payload.email
+      state.login = action.payload.login
+      state.isAuth = true
+    }
   }
-};
+})
 
-export const setAuthUserData = (data: any) => ({ type: SET_USER_DATA, data});
+export const {setAuthUserData} = authSlice.actions
 
-export const setAuthUser = () => {
+export default authSlice.reducer
+
+export const thunkSetAuthUser = () => {
   return async (dispatch : any) => {
     let data = await headerApi.getAuthUser();
     console.log("authUser data is:", data);
@@ -59,12 +53,10 @@ export const setAuthUser = () => {
   };
 };
 
-export const loginUser = (loginData: any) => {
-  return () => {
-    return headerApi.login(loginData).then((data: any) => {
+export const thunkLoginUser = (loginData: any) : ThunkAction<void, RootState, unknown, AnyAction> => {
+  return async () => {
+    return headerApi.login(loginData).then((data) => {
       console.log("User logged in !", data);
     });
   };
-};
-
-export default authReducer;
+}

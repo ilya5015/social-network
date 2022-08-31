@@ -1,12 +1,8 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { usersApi } from "../../api/api";
-
-const FOLLOW = "FOLLOW";
-const UNFOLLOW = "UNFOLLOW";
-const SET_USERS = "SET-USERS";
-const SET_CURRENT_PAGE = "SET-CURRENT-PAGE";
-const SET_TOTAL_USERS = "SET-TOTAL-USERS";
-const TOGGLE_IS_FETCHING = "TOGGLE-IS-FETCHING";
-const TOGGLE_FOLLOWING_PROCESS = "TOGGLE-FOLLOWING-PROCESS";
+import {RootState} from './store'
+import { ThunkAction } from "redux-thunk"
+import { AnyAction } from 'redux'
 
 type InitialStateType = {
   users: Array<any>,
@@ -26,87 +22,51 @@ let initialState: InitialStateType = {
   followingInProgressUsers: [],
 };
 
-const usersReducer = (state = initialState, action:any) => {
-  switch (action.type) {
-    case FOLLOW:
-      return {
-        ...state,
-        users: state.users.map((user) => {
-          if (user.id === action.userId) {
-            return { ...user, followed: true };
-          } else {
-            return user;
-          }
-        }),
-      };
-    case UNFOLLOW:
-      return {
-        ...state,
-        users: state.users.map((user) => {
-          if (user.id === action.userId) {
-            return { ...user, followed: false };
-          } else {
-            return user;
-          }
-        }),
-      };
-    case SET_USERS:
-      return {
-        ...state,
-        users: [...action.users],
-      };
-    case SET_CURRENT_PAGE:
-      return {
-        ...state,
-        currentPage: action.currentPage,
-      };
-    case SET_TOTAL_USERS:
-      return {
-        ...state,
-        totalUsers: action.totalUsers,
-      };
-    case TOGGLE_IS_FETCHING:
-      return {
-        ...state,
-        isFetching: action.isFetching,
-      };
-    case TOGGLE_FOLLOWING_PROCESS:
-      return {
-        ...state,
-        followingInProgressUsers: action.isFetching
-          ? [...state.followingInProgressUsers, action.userId]
-          : state.followingInProgressUsers.filter(
-              (userId) => userId !== action.userId
-            ),
-      };
-    default:
-      return state;
+const usersSlice = createSlice({
+  name: 'users',
+  initialState,
+  reducers: {
+    follow: (state, action: PayloadAction<number>) => {
+      state.users.forEach((user) => {
+        if (user.id === action.payload) {
+          user.followed = true
+        }
+      })
+    },
+    unfollow: (state, action: PayloadAction<number>) => {
+      state.users.forEach((user) => {
+        if (user.id === action.payload) {
+          user.followed = false
+        }
+      })
+    },
+    setUsers: (state, action: PayloadAction<any>) => {
+      state.users = action.payload
+    },
+    setCurrentPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload
+    },
+    setTotalUsers: (state, action: PayloadAction<number>) => {
+      state.totalUsers = action.payload
+    },
+    toggleIsFetching: (state, action: PayloadAction<boolean>) => {
+      state.isFetching = action.payload
+    },
+    toggleFollowingProcess: (state, action: PayloadAction<any>) => {
+     if (action.payload.isFetching)  {state.followingInProgressUsers.push(action.payload.userId)} else {
+      state.followingInProgressUsers = state.followingInProgressUsers.filter(
+        (userId) => userId !== action.payload.userId
+      )
+     }
+    }
   }
-};
+})
 
-export const followSucceeded = (userId:any) => {
-  return { type: FOLLOW, userId };
-};
-export const unfollowSucceeded = (userId:any) => {
-  return { type: UNFOLLOW, userId };
-};
-export const setUsers = (users:any) => {
-  return { type: SET_USERS, users };
-};
-export const setCurrentPage = (currentPage:any) => {
-  return { type: SET_CURRENT_PAGE, currentPage };
-};
-export const setTotalUsers = (totalUsers:any) => {
-  return { type: SET_TOTAL_USERS, totalUsers };
-};
-export const toggleIsFetching = (isFetching:any) => {
-  return { type: TOGGLE_IS_FETCHING, isFetching };
-};
-export const toggleFollowingProcess = (isFetching:any, userId:any) => {
-  return { type: TOGGLE_FOLLOWING_PROCESS, isFetching, userId };
-};
+export default usersSlice.reducer
 
-export const getUsers = (currentPage:any, pageSize:any) => {
+export const {follow, unfollow, setUsers, setCurrentPage, setTotalUsers, toggleIsFetching, toggleFollowingProcess} = usersSlice.actions
+
+export const thunkGetUsers = (currentPage:any, pageSize:any): ThunkAction<void, RootState, unknown, AnyAction> => {
   return async (dispatch:any) => {
     dispatch(toggleIsFetching(true));
     let data = await usersApi.getUsers(currentPage, pageSize);
@@ -116,26 +76,24 @@ export const getUsers = (currentPage:any, pageSize:any) => {
   };
 };
 
-export const follow = (userId:any) => {
-  return async (dispatch:any) => {
-    dispatch(toggleFollowingProcess(true, userId));
+export const thunkFollowUser = (userId: number): ThunkAction<void, RootState, unknown, AnyAction> => {
+  return async (dispatch) => {
+    dispatch(toggleFollowingProcess({isFetching: true, userId}));
     let data = await usersApi.followUser(userId);
     if (data.resultCode === 0) {
-      dispatch(followSucceeded(userId));
+      dispatch(follow(userId));
     }
-    dispatch(toggleFollowingProcess(false, userId));
+    dispatch(toggleFollowingProcess({isFetching: false, userId}));
   };
 };
 
-export const unfollow = (userId:any) => {
-  return async (dispatch:any) => {
-    dispatch(toggleFollowingProcess(true, userId));
+export const thunkUnfollowUser = (userId: number): ThunkAction<void, RootState, unknown, AnyAction> => {
+  return async (dispatch) => {
+    dispatch(toggleFollowingProcess({isFetching: true, userId}));
     let data = await usersApi.unfollowUser(userId);
     if (data.resultCode === 0) {
       dispatch(unfollow(userId));
     }
-    dispatch(toggleFollowingProcess(false, userId));
+    dispatch(toggleFollowingProcess({isFetching: false, userId}));
   };
 };
-
-export default usersReducer;

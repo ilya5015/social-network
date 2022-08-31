@@ -1,4 +1,3 @@
-import { addPost } from "../../Redux/profile-reducer";
 import MyPosts from "./MyPosts";
 
 import { connect } from "react-redux";
@@ -10,8 +9,6 @@ let mapStateToProps = (state) => {
   };
 };
 
-const SuperMyPostsContainer = connect(mapStateToProps, {
-  addPost,
-})(MyPosts);
+const SuperMyPostsContainer = connect(mapStateToProps, {})(MyPosts);
 
 export default SuperMyPostsContainer;

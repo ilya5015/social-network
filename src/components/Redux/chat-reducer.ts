@@ -1,63 +1,50 @@
 import { chatApi } from "../../api/chatApi";
-
-const SET_MESSAGES = "SET-MESSAGES";
-const SET_STATUS = "SET-STATUS";
+import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction } from "@reduxjs/toolkit";
 
 type InitialStateType = {
   messages: Array<any>,
   status: string
 }
 
-type ChatReducerActionType = {
-  type: string,
-  messages?: Array<any>,
-  status?: string
+type ChatMessageDataType = {
+  userId: number,
+  userName: string,
+  message: string,
+  photo: string
 }
 
-type SetMessagesActionCreatorType = {
-  type: typeof SET_MESSAGES,
-  messages: Array<any>
-}
-
-type SetStatusActionCreatorType = {
-  type: typeof SET_STATUS,
-  status: string
-}
+type ChatMessagesDataType = Array<ChatMessageDataType>
 
 let initialState: InitialStateType = {
   messages: [],
   status: "ready",
 };
 
-const chatReducer = (state = initialState, action: ChatReducerActionType): InitialStateType => {
-  switch (action.type) {
-    case "SET-MESSAGES": 
-      if (action.messages) {
-      return {
-        ...state,
-        messages: [...state.messages, ...action.messages],
-      }}
-    return state
-    case "CHANGE-STATUS": 
-      if (action.status) {
-      return {
-        ...state,
-        status: action.status,
-      }}
-      return state
-    default:
-      return state;
+const chatSlice = createSlice({
+  name: 'chat',
+  initialState,
+  reducers: {
+    setMessages: (state, action: PayloadAction<ChatMessagesDataType>) => {
+      state.messages = action.payload
+    },
+    changeStatus: (state, action: PayloadAction<string>) => {
+      state.status = action.payload
+    }
   }
-};
+})
 
-export default chatReducer;
+export const {setMessages, changeStatus} = chatSlice.actions
+
+
+export default chatSlice.reducer;
 
 let _newMessagesHandler: any = null;
 
 const newMessagesHandlerCreator = (dispatch: any) : any => {
   if (_newMessagesHandler === null) {
     _newMessagesHandler = (messages: any) => {
-      dispatch(messagesSet(messages));
+      dispatch(setMessages(messages));
     };
   } else {
     _newMessagesHandler = null;
@@ -77,12 +64,4 @@ export const stopMessagesListening = () => async (dispatch:any) => {
 
 export const sendMessage = async (message:string) => {
   chatApi.sendMessage(message);
-};
-
-export const messagesSet = (messages:any):SetMessagesActionCreatorType => {
-  return { type: SET_MESSAGES, messages };
-};
-
-export const changeStatus = (status:any):SetStatusActionCreatorType => {
-  return { type: SET_STATUS, status };
 };

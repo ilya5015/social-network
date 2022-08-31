@@ -2,12 +2,12 @@ import React from "react";
 import Users from "./Users";
 import { connect } from "react-redux";
 import {
-  follow,
-  unfollow,
+  thunkFollowUser,
+  thunkUnfollowUser,
   setUsers,
   setCurrentPage,
   setTotalUsers,
-  getUsers,
+  thunkGetUsers,
 } from "../Redux/users-reducer";
 import Preloader from "../common/Preloader/Preloader";
 
@@ -59,10 +59,10 @@ let mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-  follow,
-  unfollow,
-  setUsers,
-  setCurrentPage,
-  setTotalUsers,
-  getUsers,
+  follow: thunkFollowUser,
+  unfollow: thunkUnfollowUser,
+  setUsers: setUsers,
+  setCurrentPage: setCurrentPage,
+  setTotalUsers: setTotalUsers,
+  getUsers: thunkGetUsers,
 })(UsersContainer);
