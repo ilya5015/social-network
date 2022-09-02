@@ -2,7 +2,7 @@ import { Pagination } from "@mui/material";
 import React, { useEffect } from "react";
 import "./Paginator.css";
 
-const Paginator = ({ pages, currentPage, portionSize, onPageChanged }) => {
+const Paginator = ({ pages, onPageChanged }) => {
   let onPaginationElemClick = (event) => {
     if (event !== null) {
       let eventTarget = event.target;

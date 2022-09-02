@@ -1,5 +1,5 @@
 import React from "react";
-import Users from "./Users";
+import _Users from "./_Users";
 import { connect } from "react-redux";
 import {
   thunkFollowUser,
@@ -8,10 +8,10 @@ import {
   setCurrentPage,
   setTotalUsers,
   thunkGetUsers,
-} from "../Redux/users-reducer";
-import Preloader from "../common/Preloader/Preloader";
+} from "../../Redux/users-reducer";
+import Preloader from "../../common/Preloader/Preloader";
 
-class UsersContainer extends React.Component {
+class _UsersContainer extends React.Component {
   componentDidMount() {
     if (this.props.users.length === 0) {
       this.props.getUsers(this.props.currentPage, this.props.pageSize);
@@ -29,7 +29,7 @@ class UsersContainer extends React.Component {
         {this.props.isFetching ? (
           <Preloader isFetching={this.props.isFetching} />
         ) : null}
-        <Users
+        <_Users
           currentPage={this.props.currentPage}
           totalUsers={this.props.totalUsers}
           pageSize={this.props.pageSize}
@@ -65,4 +65,4 @@ export default connect(mapStateToProps, {
   setCurrentPage: setCurrentPage,
   setTotalUsers: setTotalUsers,
   getUsers: thunkGetUsers,
-})(UsersContainer);
+})(_UsersContainer);

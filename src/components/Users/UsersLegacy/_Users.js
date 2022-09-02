@@ -1,56 +1,39 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { shallowEqual } from "react-redux";
-import Paginator from "../common/Paginator/Paginator";
-import {
-  thunkFollowUser,
-  thunkUnfollowUser,
-  fetchUsers,
-  setCurrentPage,
-} from "../Redux/users-reducer";
+import Paginator from "../../common/Paginator/Paginator";
 
-const Users = () => {
-  const dispatch = useAppDispatch();
-
-  const [totalUsers, pageSize, currentPage, users, followingInProgressUsers] =
-    useAppSelector(
-      (state) => [
-        state.usersPage.totalUsers,
-        state.usersPage.pageSize,
-        state.usersPage.currentPage,
-        state.usersPage.users,
-        state.usersPage.followingInProgressUsers,
-      ],
-      shallowEqual
-    );
-
+const _Users = ({
+  totalUsers,
+  pageSize,
+  currentPage,
+  onPageChanged,
+  users,
+  followingInProgressUsers,
+  unfollow,
+  follow,
+}) => {
   const [pages, setPages] = useState([]);
 
   useEffect(() => {
-    console.log("fetching users ...");
-    dispatch(fetchUsers({ currentPage, pageSize }));
-  }, [dispatch, pageSize, currentPage]);
-
-  useEffect(() => {
     let pagesCount = Math.ceil(totalUsers / pageSize);
-    let totalPages = [];
+    let pages = [];
     for (let i = 1; i <= pagesCount; i++) {
-      totalPages.push(i);
+      pages.push(i);
     }
-    setPages(totalPages);
+    setPages(pages);
   }, [totalUsers, pageSize]);
-
-  const onPageChanged = (page) => {
-    dispatch(setCurrentPage(page));
-  };
 
   return (
     <div>
       <div className="Paginator">
-        <Paginator pages={pages} onPageChanged={onPageChanged} />
+        <Paginator
+          pages={pages}
+          currentPage={currentPage}
+          portionSize={pageSize}
+          onPageChanged={onPageChanged}
+        />
       </div>
+
       <div>
         {users?.map((user) => (
           <div key={user.id}>
@@ -76,7 +59,7 @@ const Users = () => {
                       (userId) => user.id === userId
                     )}
                     onClick={() => {
-                      thunkUnfollowUser(user.id);
+                      unfollow(user.id);
                     }}
                   >
                     Unfollow
@@ -87,7 +70,7 @@ const Users = () => {
                       (userId) => user.id === userId
                     )}
                     onClick={() => {
-                      thunkFollowUser(user.id);
+                      follow(user.id);
                     }}
                   >
                     Follow
@@ -112,4 +95,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default _Users;

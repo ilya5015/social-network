@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { usersApi } from "../../api/api";
 import {RootState} from './store'
 import { ThunkAction } from "redux-thunk"
@@ -21,6 +21,14 @@ let initialState: InitialStateType = {
   isFetching: false,
   followingInProgressUsers: [],
 };
+
+export const fetchUsers = createAsyncThunk(
+  'users/fetchUsers',
+  async ({currentPage, pageSize}:any, {rejectWithValue}) => {
+    const data = await usersApi.getUsers(currentPage, pageSize);
+    return data
+  }
+)
 
 const usersSlice = createSlice({
   name: 'users',
@@ -59,14 +67,30 @@ const usersSlice = createSlice({
       )
      }
     }
-  }
-})
+  },
+  extraReducers:
+  (builer) => {
+    builer.addCase(fetchUsers.pending, (state,action) => {
+      state.isFetching = true
+    })
+    .addCase(fetchUsers.fulfilled, (state, action) => {
+      console.log('fetch users', action.payload)
+      state.isFetching = false
+      state.users = action.payload.items
+      state.totalUsers = action.payload.totalCount
+    })
+    .addCase(fetchUsers.rejected, (state, action) => {
+      state.isFetching = false
+      console.log(action.payload)}
+    )
+}})
 
 export default usersSlice.reducer
 
 export const {follow, unfollow, setUsers, setCurrentPage, setTotalUsers, toggleIsFetching, toggleFollowingProcess} = usersSlice.actions
 
 export const thunkGetUsers = (currentPage:any, pageSize:any): ThunkAction<void, RootState, unknown, AnyAction> => {
+  debugger
   return async (dispatch:any) => {
     dispatch(toggleIsFetching(true));
     let data = await usersApi.getUsers(currentPage, pageSize);

@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import { Suspense } from "react";
-import UsersContainer from "./components/Users/UsersContainer";
+
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import { connect } from "react-redux/es/exports";
@@ -11,6 +11,7 @@ import Preloader from "./components/common/Preloader/Preloader";
 import LoginFormContainer from "./components/forms/LoginFormContainer";
 import { Paper } from "@mui/material";
 import { Navigate } from "react-router-dom";
+import Users from "./components/Users/Users";
 
 const News = React.lazy(() => import("./components/News/News"));
 const Music = React.lazy(() => import("./components/Music/Music"));
@@ -64,7 +65,7 @@ class App extends React.Component {
                     <Route path="/news" element={<News />} />
                     <Route path="/music" element={<Music />} />
                     <Route path="/settings" element={<Settings />} />
-                    <Route path="/users" element={<UsersContainer />} />
+                    <Route path="/users" element={<Users />} />
                     <Route path="/login" element={<LoginFormContainer />} />
                   </Routes>
                 </Paper>
