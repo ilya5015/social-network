@@ -5,8 +5,8 @@ import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { shallowEqual } from "react-redux";
 import Paginator from "../common/Paginator/Paginator";
 import {
-  thunkFollowUser,
-  thunkUnfollowUser,
+  followUser,
+  unfollowUser,
   fetchUsers,
   setCurrentPage,
 } from "../Redux/users-reducer";
@@ -48,6 +48,7 @@ const Users = () => {
 
   return (
     <div>
+      <div>{JSON.stringify(users, 4, 4)}</div>
       <div className="Paginator">
         <Paginator pages={pages} onPageChanged={onPageChanged} />
       </div>
@@ -76,7 +77,7 @@ const Users = () => {
                       (userId) => user.id === userId
                     )}
                     onClick={() => {
-                      thunkUnfollowUser(user.id);
+                      dispatch(unfollowUser({ userId: user.id }));
                     }}
                   >
                     Unfollow
@@ -87,7 +88,7 @@ const Users = () => {
                       (userId) => user.id === userId
                     )}
                     onClick={() => {
-                      thunkFollowUser(user.id);
+                      dispatch(followUser({ userId: user.id }));
                     }}
                   >
                     Follow

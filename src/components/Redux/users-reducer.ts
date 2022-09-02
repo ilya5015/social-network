@@ -30,6 +30,22 @@ export const fetchUsers = createAsyncThunk(
   }
 )
 
+export const followUser = createAsyncThunk(
+  'users/followUser',
+  async ({userId}:any, {rejectWithValue}) => {
+    let data = await usersApi.followUser(userId);
+    return data
+  }
+)
+
+export const unfollowUser = createAsyncThunk(
+  'users/unfollowUser',
+  async ({userId}:any, {rejectWithValue}) => {
+    let data = await usersApi.unfollowUser(userId);
+    return data
+  }
+)
+
 const usersSlice = createSlice({
   name: 'users',
   initialState,
@@ -83,41 +99,35 @@ const usersSlice = createSlice({
       state.isFetching = false
       console.log(action.payload)}
     )
+    //
+    .addCase(followUser.pending, (state, action) => {
+      console.log('pending', action.meta.arg)
+      state.followingInProgressUsers.push(action.meta.arg.userId)
+    }).addCase(followUser.fulfilled, (state, action) => {
+      console.log('fulfilled', action.payload)
+      state.followingInProgressUsers.splice(state.followingInProgressUsers.indexOf(action.meta.arg.userId), 1)
+      state.users.find(user => user.id === action.meta.arg.userId).followed = true
+    }).addCase(followUser.rejected, (state, action) => {
+      console.log('rejected', action.payload)
+      state.followingInProgressUsers.splice(state.followingInProgressUsers.indexOf(action.meta.arg.userId), 1)
+    })
+    //
+    .addCase(unfollowUser.pending, (state, action) => {
+      console.log('pending', action.meta.arg)
+      state.followingInProgressUsers.push(action.meta.arg.userId)
+    }).addCase(unfollowUser.fulfilled, (state, action) => {
+      console.log('fulfilled', action.payload)
+      state.followingInProgressUsers.splice(state.followingInProgressUsers.indexOf(action.meta.arg.userId), 1)
+      console.log('users state', state.users)
+      state.users.find(user => user.id === action.meta.arg.userId).followed = false
+    }).addCase(unfollowUser.rejected, (state, action) => {
+      console.log('rejected', action.payload)
+      state.followingInProgressUsers.splice(state.followingInProgressUsers.indexOf(action.meta.arg.userId), 1)
+    })
 }})
 
 export default usersSlice.reducer
 
 export const {follow, unfollow, setUsers, setCurrentPage, setTotalUsers, toggleIsFetching, toggleFollowingProcess} = usersSlice.actions
 
-export const thunkGetUsers = (currentPage:any, pageSize:any): ThunkAction<void, RootState, unknown, AnyAction> => {
-  debugger
-  return async (dispatch:any) => {
-    dispatch(toggleIsFetching(true));
-    let data = await usersApi.getUsers(currentPage, pageSize);
-    dispatch(toggleIsFetching(false));
-    dispatch(setUsers(data.items));
-    dispatch(setTotalUsers(data.totalCount));
-  };
-};
 
-export const thunkFollowUser = (userId: number): ThunkAction<void, RootState, unknown, AnyAction> => {
-  return async (dispatch) => {
-    dispatch(toggleFollowingProcess({isFetching: true, userId}));
-    let data = await usersApi.followUser(userId);
-    if (data.resultCode === 0) {
-      dispatch(follow(userId));
-    }
-    dispatch(toggleFollowingProcess({isFetching: false, userId}));
-  };
-};
-
-export const thunkUnfollowUser = (userId: number): ThunkAction<void, RootState, unknown, AnyAction> => {
-  return async (dispatch) => {
-    dispatch(toggleFollowingProcess({isFetching: true, userId}));
-    let data = await usersApi.unfollowUser(userId);
-    if (data.resultCode === 0) {
-      dispatch(unfollow(userId));
-    }
-    dispatch(toggleFollowingProcess({isFetching: false, userId}));
-  };
-};
