@@ -51,7 +51,7 @@ export const profileApi = {
   },
 };
 
-export const headerApi = {
+export const authApi = {
   getAuthUser() {
     return apiInstance
       .get(`auth/me`, {

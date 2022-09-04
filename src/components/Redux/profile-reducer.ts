@@ -29,7 +29,6 @@ let initialState: InitialStateType = {
 export const fetchUser = createAsyncThunk(
   'profile/fetchUser',
   async ({userId}:any, {rejectWithValue}) => {
-    console.log('Fetching user', userId)
     const data = await profileApi.getUser(userId);
     return data
   }

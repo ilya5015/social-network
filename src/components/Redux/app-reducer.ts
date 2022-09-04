@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { thunkSetAuthUser } from "./auth-reducer"
+import { fetchAuthUser } from "./auth-reducer"
 import {RootState} from './store'
 import { ThunkAction } from "redux-thunk"
 import { AnyAction } from 'redux'
@@ -27,7 +27,7 @@ export const {setInitialized} = appSlice.actions
 export default appSlice.reducer;
 
 export const thunkInitializeApp = () : ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch) => {
-  await dispatch(thunkSetAuthUser()).then(() => {
+  await dispatch(fetchAuthUser()).then(() => {
     dispatch(setInitialized());
   });
 };

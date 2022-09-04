@@ -1,11 +1,5 @@
-import LoginFormContainer from "../forms/LoginFormContainer";
-
 const News = () => {
-  return (
-    <div>
-      <LoginFormContainer />
-    </div>
-  );
+  return <div>News</div>;
 };
 
 export default News;

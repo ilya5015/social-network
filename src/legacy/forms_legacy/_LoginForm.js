@@ -1,11 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useAppDispatch } from "../../hooks/hooks";
-import { loginUser } from "../Redux/auth-reducer";
 
-const LoginForm = () => {
-  const dispatch = useAppDispatch();
-
+const LoginForm = (props) => {
   const { register, handleSubmit } = useForm({
     email: "",
     password: "",
@@ -16,7 +12,7 @@ const LoginForm = () => {
       <form
         onSubmit={handleSubmit((data) => {
           console.log(data);
-          dispatch(loginUser({ data }));
+          props.loginUser(data);
         })}
       >
         <input
@@ -31,7 +27,7 @@ const LoginForm = () => {
         />
         <input type="checkbox" {...register("rememberMe")} id="checkbox1" />
         <label htmlFor="checkbox1">Remember me!</label>
-        <input type="submit" onClick={() => {}} />
+        <input type="submit" />
       </form>
     </div>
   );

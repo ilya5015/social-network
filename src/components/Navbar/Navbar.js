@@ -1,6 +1,5 @@
 import "./Navbar.css";
 import { NavLink } from "react-router-dom";
-import { AppBar, Toolbar, IconButton, Drawer } from "@mui/material";
 
 const Navbar = () => {
   return (

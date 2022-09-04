@@ -1,6 +1,6 @@
 import { connect } from "react-redux/es/exports";
-import { thunkLoginUser } from "../Redux/auth-reducer";
-import LoginForm from "./LoginForm";
+import { thunkLoginUser } from "../../components/Redux/auth-reducer";
+import LoginForm from "./_LoginForm";
 
 let mapStateToProps = (state) => ({});
 

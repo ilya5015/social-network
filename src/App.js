@@ -7,10 +7,10 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import { connect } from "react-redux/es/exports";
 import { thunkInitializeApp } from "./components/Redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
-import LoginFormContainer from "./components/forms/LoginFormContainer";
 import { Paper } from "@mui/material";
 import { Navigate } from "react-router-dom";
 import Users from "./components/Users/Users";
+import LoginForm from "./components/forms/LoginForm";
 
 const News = React.lazy(() => import("./components/News/News"));
 const Music = React.lazy(() => import("./components/Music/Music"));
@@ -62,7 +62,7 @@ class App extends React.Component {
                     <Route path="/music" element={<Music />} />
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/users" element={<Users />} />
-                    <Route path="/login" element={<LoginFormContainer />} />
+                    <Route path="/login" element={<LoginForm />} />
                   </Routes>
                 </Paper>
               </div>

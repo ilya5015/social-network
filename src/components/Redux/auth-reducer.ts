@@ -1,8 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { headerApi } from "../../api/api";
-import {RootState} from './store'
-import { ThunkAction } from "redux-thunk"
-import { AnyAction } from 'redux'
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { authApi } from "../../api/api";
 
 type InitialStateType = {
   id: number|null,
@@ -26,37 +23,53 @@ let initialState: InitialStateType = {
   isAuth: false,
 };
 
+export const fetchAuthUser = createAsyncThunk(
+  'auth/setAuthUser',
+  async (_, {rejectWithValue}) => {
+    let data = await authApi.getAuthUser();
+    console.log("authUser data is:", data);
+    return data
+  }
+)
+
+export const loginUser = createAsyncThunk(
+  'auth/loginUser',
+  async ({loginData}: any, {rejectWithValue}) => {
+    let data = await authApi.login(loginData);
+    console.log("loginUser data is:", data);
+    return data
+  }
+)
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setAuthUserData: (state, action: PayloadAction<AuthUserDataType>) => {
-      state.id = action.payload.id
+    
+  },
+  extraReducers: 
+    (builder) => {
+      builder.addCase(fetchAuthUser.pending, (state, action) => {
+        console.log('Fetching auth user pending')
+      }).addCase(fetchAuthUser.fulfilled, (state, action) => {
+        state.id = action.payload.id
       state.email = action.payload.email
       state.login = action.payload.login
       state.isAuth = true
+      console.log('Fetching auth user fulfilled')
+      }).addCase(fetchAuthUser.rejected, (state, action) => {
+        console.log('Fetching auth user rejected', action.error)
+      })
+      //
+      .addCase(loginUser.pending, (state, action) => {
+        console.log('Fetching login user pending')
+      }).addCase(loginUser.fulfilled, (state, action) => {
+        console.log('Fetching login user fulfilled', action.payload)
+      }).addCase(loginUser.rejected, (state, action) => {
+        console.log('Fetching login user rejected', action.error)
+      })
     }
-  }
+  
 })
 
-export const {setAuthUserData} = authSlice.actions
-
 export default authSlice.reducer
-
-export const thunkSetAuthUser = () => {
-  return async (dispatch : any) => {
-    let data = await headerApi.getAuthUser();
-    console.log("authUser data is:", data);
-    if (data !== false) {
-      dispatch(setAuthUserData(data.data));
-    }
-  };
-};
-
-export const thunkLoginUser = (loginData: any) : ThunkAction<void, RootState, unknown, AnyAction> => {
-  return async () => {
-    return headerApi.login(loginData).then((data) => {
-      console.log("User logged in !", data);
-    });
-  };
-}
