@@ -1,65 +1,67 @@
 import React, { useEffect, useState } from "react";
+import { useAppDispatch } from "../../../../hooks/hooks";
+import { fetchUpdateUserStatus } from "../../../Redux/profile-reducer";
 
-const ProfileStatus = React.memo(
-  ({ userStatus, updateUserStatus, myId, currentId }) => {
-    const [statusText, setStatusText] = useState("");
-    const [editMode, setEditMode] = useState(false);
+const ProfileStatus = React.memo(({ userStatus, myId, currentId }) => {
+  const dispatch = useAppDispatch();
 
-    useEffect(() => {
-      setStatusText(() => userStatus);
-    }, [userStatus]);
+  const [statusText, setStatusText] = useState("");
+  const [editMode, setEditMode] = useState(false);
 
-    let setActivateEditMode = () => {
-      setEditMode(true);
-    };
+  useEffect(() => {
+    setStatusText(() => userStatus);
+  }, [userStatus]);
 
-    let setDeactivateEditMode = () => {
-      setEditMode(false);
-    };
+  let setActivateEditMode = () => {
+    setEditMode(true);
+  };
 
-    let updateLocalStatusText = (status) => {
-      if (myId && !currentId) {
-        setStatusText(status);
-      } else {
-        console.log("noooope");
-        console.log(myId, currentId);
-      }
-    };
+  let setDeactivateEditMode = () => {
+    setEditMode(false);
+  };
 
-    let updateStatusText = (status) => {
-      updateUserStatus(status);
-    };
+  let updateLocalStatusText = (status) => {
+    if (myId && !currentId) {
+      setStatusText(status);
+    } else {
+      console.log("noooope");
+      console.log(myId, currentId);
+    }
+  };
 
-    return (
-      <div>
-        {!editMode ? (
-          <div
-            onDoubleClick={() => {
-              if (myId && !currentId) {
-                setActivateEditMode();
-              }
+  let updateStatusText = (status) => {
+    dispatch(fetchUpdateUserStatus({ userStatus: status }));
+  };
+
+  return (
+    <div>
+      {!editMode ? (
+        <div
+          onDoubleClick={() => {
+            if (myId && !currentId) {
+              setActivateEditMode();
+            }
+          }}
+        >
+          {statusText}
+        </div>
+      ) : (
+        <div>
+          <input
+            value={statusText}
+            autoFocus={true}
+            onBlur={() => {
+              setDeactivateEditMode();
+              updateStatusText(statusText);
             }}
-          >
-            {statusText}
-          </div>
-        ) : (
-          <div>
-            <input
-              value={statusText}
-              autoFocus={true}
-              onBlur={() => {
-                setDeactivateEditMode();
-                updateStatusText(statusText);
-              }}
-              onChange={(e) => {
-                updateLocalStatusText(e.target.value);
-              }}
-            ></input>
-          </div>
-        )}
-      </div>
-    );
-  }
-);
+            onChange={(e) => {
+              updateLocalStatusText(e.target.value);
+            }}
+          ></input>
+        </div>
+      )}
+    </div>
+  );
+});
 
 export default ProfileStatus;

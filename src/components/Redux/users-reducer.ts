@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { usersApi } from "../../api/api";
-import {RootState} from './store'
-import { ThunkAction } from "redux-thunk"
-import { AnyAction } from 'redux'
 
 type InitialStateType = {
   users: Array<any>,
@@ -70,19 +67,6 @@ const usersSlice = createSlice({
     setCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload
     },
-    setTotalUsers: (state, action: PayloadAction<number>) => {
-      state.totalUsers = action.payload
-    },
-    toggleIsFetching: (state, action: PayloadAction<boolean>) => {
-      state.isFetching = action.payload
-    },
-    toggleFollowingProcess: (state, action: PayloadAction<any>) => {
-     if (action.payload.isFetching)  {state.followingInProgressUsers.push(action.payload.userId)} else {
-      state.followingInProgressUsers = state.followingInProgressUsers.filter(
-        (userId) => userId !== action.payload.userId
-      )
-     }
-    }
   },
   extraReducers:
   (builer) => {
@@ -128,6 +112,6 @@ const usersSlice = createSlice({
 
 export default usersSlice.reducer
 
-export const {follow, unfollow, setUsers, setCurrentPage, setTotalUsers, toggleIsFetching, toggleFollowingProcess} = usersSlice.actions
+export const {follow, unfollow, setUsers, setCurrentPage} = usersSlice.actions
 
 

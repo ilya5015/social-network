@@ -6,7 +6,7 @@ import {
   thunkGetUser,
   thunkGetUserStatus,
   thunkUpdateUserStatus,
-} from "../Redux/profile-reducer";
+} from "../../components/Redux/profile-reducer";
 import connectedWithAuthRedirect from "../../HOC/WithAuthRedirect";
 import { compose } from "redux";
 import { Navigate } from "react-router-dom";

@@ -60,9 +60,8 @@ const Users = () => {
                 <NavLink to={`/profile/${user.id}`}>
                   <img
                     src={
-                      user.photos.small != null
-                        ? (user.photos.small =
-                            "https://temperaturka.com/wp-content/uploads/5/d/f/5dfafb5bc640c3978688e632a5aa46f3.jpe")
+                      user.photos.small === null
+                        ? "https://temperaturka.com/wp-content/uploads/5/d/f/5dfafb5bc640c3978688e632a5aa46f3.jpe"
                         : user.photos.small
                     }
                     width="100"

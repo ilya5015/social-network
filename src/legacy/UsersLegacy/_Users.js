@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import Paginator from "../../common/Paginator/Paginator";
+import Paginator from "../../components/common/Paginator/Paginator";
 
 const _Users = ({
   totalUsers,

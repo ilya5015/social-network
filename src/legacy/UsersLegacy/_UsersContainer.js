@@ -8,8 +8,8 @@ import {
   setCurrentPage,
   setTotalUsers,
   thunkGetUsers,
-} from "../../Redux/users-reducer";
-import Preloader from "../../common/Preloader/Preloader";
+} from "../../components/Redux/users-reducer";
+import Preloader from "../../components/common/Preloader/Preloader";
 
 class _UsersContainer extends React.Component {
   componentDidMount() {

@@ -1,9 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
 import { profileApi } from "../../api/api";
-import { PayloadAction } from "@reduxjs/toolkit";
-import {RootState} from './store'
-import { ThunkAction } from "redux-thunk"
-import { AnyAction } from 'redux'
+import { createSlice, PayloadAction, createAsyncThunk} from "@reduxjs/toolkit";
 
 type InitialStateType = {
   postData: any,
@@ -30,43 +26,65 @@ let initialState: InitialStateType = {
   userStatus: "",
 };
 
+export const fetchUser = createAsyncThunk(
+  'profile/fetchUser',
+  async ({userId}:any, {rejectWithValue}) => {
+    console.log('Fetching user', userId)
+    const data = await profileApi.getUser(userId);
+    return data
+  }
+)
+
+export const fetchUserStatus = createAsyncThunk(
+  'profile/fetchUserStatus',
+  async ({userId}:any, {rejectWithValue}) => {
+    const data = await profileApi.getUserStatus(userId);
+    return data
+  }
+)
+
+export const fetchUpdateUserStatus = createAsyncThunk(
+  'profile/fetchUpdateUserStatus',
+  async ({userStatus}:any, {rejectWithValue}) => {
+    const data = await profileApi.setStatus(userStatus);
+    return data
+  }
+)
+
 const profileSlice = createSlice({
   name: 'profile',
   initialState,
   reducers: {
-    setUserProfile: (state, action: PayloadAction<any>) => {
+  },
+  extraReducers:
+  (builder) => {
+    builder.addCase(fetchUser.pending, (state,action) => {
+      console.log('User is fetching', action.meta.arg.myId)
+    }).addCase(fetchUser.fulfilled, (state,action) => {
       state.profile = action.payload
-    },
-    setUserStatus: (state, action: PayloadAction<string>) => {
+      console.log('User fulfilled', action.payload)
+    }).addCase(fetchUser.rejected, (state,action) => {
+      console.log('User rejected', action.error)
+    })
+    //
+    .addCase(fetchUserStatus.pending, (state,action) => {
+      console.log('User is fetching', action.meta.arg.myId)
+    }).addCase(fetchUserStatus.fulfilled, (state,action) => {
       state.userStatus = action.payload
-    }
-  }
-})
-
-export const {setUserProfile, setUserStatus} = profileSlice.actions
+      console.log('User fulfilled', action.payload)
+    }).addCase(fetchUserStatus.rejected, (state,action) => {
+      console.log('User rejected', action.payload)
+    })
+    //
+    .addCase(fetchUpdateUserStatus.pending, (state,action) => {
+      console.log('User is fetching', action.meta.arg.userStatus)
+    })
+    .addCase(fetchUpdateUserStatus.fulfilled, (state,action) => {
+      console.log('User fulfilled', action.payload)
+    })
+    .addCase(fetchUpdateUserStatus.rejected, (state,action) => {
+      console.log('User rejected', action.payload)
+    })
+}})
 
 export default profileSlice.reducer;
-
-export const thunkGetUser = (userId: any): ThunkAction<void, RootState, unknown, AnyAction> => {
-  return async (dispatch) => {
-    let data = await profileApi.getUser(userId);
-    dispatch(setUserProfile(data));
-  };
-};
-
-export const thunkGetUserStatus = (userId: number): ThunkAction<void, RootState, unknown, AnyAction> => {
-  return (dispatch) => {
-    profileApi.getUserStatus(userId).then((data) => {
-      dispatch(setUserStatus(data));
-    });
-  };
-};
-
-export const thunkUpdateUserStatus = (userStatus: string):ThunkAction<void, RootState, unknown, AnyAction> => {
-  return (dispatch) => {
-    profileApi.setStatus(userStatus).then((data) => {
-      console.log(data);
-      dispatch(setUserStatus(userStatus));
-    });
-  };
-};

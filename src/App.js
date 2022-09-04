@@ -1,8 +1,7 @@
 import React from "react";
 import "./App.css";
-import ProfileContainer from "./components/Profile/ProfileContainer";
+import Profile from "./components/Profile/Profile";
 import { Suspense } from "react";
-
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import { connect } from "react-redux/es/exports";
@@ -52,11 +51,8 @@ class App extends React.Component {
                 <Paper elevation={3}>
                   <Routes>
                     <Route path="/" element={<Navigate to="/profile" />} />
-                    <Route
-                      path="/profile/:userId"
-                      element={<ProfileContainer />}
-                    />
-                    <Route path="/profile" element={<ProfileContainer />} />
+                    <Route path="/profile/:userId" element={<Profile />} />
+                    <Route path="/profile" element={<Profile />} />
                     <Route
                       exact
                       path="/dialogs"
