@@ -52,11 +52,12 @@ const authSlice = createSlice({
       builder.addCase(fetchAuthUser.pending, (state, action) => {
         console.log('Fetching auth user pending')
       }).addCase(fetchAuthUser.fulfilled, (state, action) => {
-        state.id = action.payload.id
-      state.email = action.payload.email
-      state.login = action.payload.login
+        console.log('Fetching auth user fulfilled', action)
+        state.id = action.payload.data.id
+      state.email = action.payload.data.email
+      state.login = action.payload.data.login
       state.isAuth = true
-      console.log('Fetching auth user fulfilled')
+      
       }).addCase(fetchAuthUser.rejected, (state, action) => {
         console.log('Fetching auth user rejected', action.error)
       })
