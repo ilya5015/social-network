@@ -17,7 +17,7 @@ const AppHeader = (props) => {
         zIndex: 1,
         width: "100%",
         height: "60px",
-        opacity: 0.3,
+        position: "fixed",
         backgroundColor: "rgb(242,242,247)",
       }}
       className="app-header"

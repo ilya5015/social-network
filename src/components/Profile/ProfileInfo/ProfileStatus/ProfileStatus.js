@@ -34,7 +34,7 @@ const ProfileStatus = React.memo(({ userStatus, myId, currentId }) => {
   };
 
   return (
-    <div>
+    <div className="profile-info-status">
       {!editMode ? (
         <div
           onDoubleClick={() => {
@@ -43,10 +43,11 @@ const ProfileStatus = React.memo(({ userStatus, myId, currentId }) => {
             }
           }}
         >
-          {statusText}
+          status: {statusText}
         </div>
       ) : (
         <div>
+          status:{" "}
           <input
             value={statusText}
             autoFocus={true}
