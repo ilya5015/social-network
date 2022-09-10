@@ -1,6 +1,5 @@
 import styles from "./MyPosts.module.css";
 import Post from "./Post/Post";
-import { Button, TextField } from "@mui/material";
 import { useRef, useState } from "react";
 
 const MyPosts = (props) => {

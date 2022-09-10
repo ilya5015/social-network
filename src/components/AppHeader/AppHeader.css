@@ -1,0 +1,8 @@
+.app-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.app-header-logo {
+  margin-right: 50%;
+}

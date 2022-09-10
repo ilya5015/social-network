@@ -1,6 +1,6 @@
-import { Pagination } from "@mui/material";
 import React, { useEffect } from "react";
 import "./Paginator.css";
+import { Pagination } from "antd";
 
 const Paginator = ({ pages, onPageChanged }) => {
   let onPaginationElemClick = (event) => {
@@ -18,7 +18,8 @@ const Paginator = ({ pages, onPageChanged }) => {
       <br />
       <div className={"window"} style={{ width: "320px" }}>
         <Pagination
-          count={pages.length}
+          defaultCurrent={1}
+          total={pages.length}
           onClick={(e) => {
             onPaginationElemClick(e);
           }}

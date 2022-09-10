@@ -1,14 +1,13 @@
-.nav {
-  display: flex;
-  flex-direction: column;
-  padding: 5px;
+.app-sider {
+  background-color: rgb(229, 229, 234)
 }
 
-.nav-item {
-  color: #F19CBB;
-  font-size: x-large;
+.app-sider-nav-menu {
+  position: fixed;
+  margin-top: 60px;
+  list-style-type: none;
 }
 
-.navItem a.active {
-  text-decoration: none;
+.ant-menu-item :hover {
+  color: antiquewhite;;
 }

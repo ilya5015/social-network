@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 import "./App.css";
 import Profile from "./components/Profile/Profile";
 import { Suspense } from "react";
-
+import Layout, { Content, Header } from "antd/lib/layout/layout";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import HeaderContainer from "./components/Header/HeaderContainer";
 import { initializeApp } from "./components/Redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 import LoginForm from "./components/forms/LoginForm";
-import { Paper } from "@mui/material";
-import { Navigate } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
 import Users from "./components/Users/Users";
 import { useAppDispatch, useAppSelector } from "./hooks/hooks";
+import Navbar from "./components/Navbar/Navbar";
+import AppHeader from "./components/AppHeader/AppHeader";
 
 const News = React.lazy(() => import("./components/News/News"));
 const Music = React.lazy(() => import("./components/Music/Music"));
@@ -48,27 +48,38 @@ const App = () => {
           </div>
         }
       >
-        <BrowserRouter>
-          <div className="app-wrapper">
-            <HeaderContainer />
+        <Layout className="app-wrapper">
+          <BrowserRouter>
+            <AppHeader />
 
-            <div className="app-wrapper-content window">
-              <Paper elevation={3}>
-                <Routes>
-                  <Route path="/" element={<Navigate to="/profile" />} />
-                  <Route path="/profile/:userId" element={<Profile />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route exact path="/dialogs" element={<DialogsContainer />} />
-                  <Route path="/news" element={<News />} />
-                  <Route path="/music" element={<Music />} />
-                  <Route path="/settings" element={<Settings />} />
-                  <Route path="/users" element={<Users />} />
-                  <Route path="/login" element={<LoginForm />} />
-                </Routes>
-              </Paper>
-            </div>
-          </div>
-        </BrowserRouter>
+            <Layout className="app-content-wrapper">
+              <Navbar />
+              <Content className="content-wrapper">
+                <Content
+                  title="card1"
+                  size="large"
+                  className="content-wrapper-window"
+                >
+                  <Routes>
+                    <Route path="/" element={<Navigate to="/profile" />} />
+                    <Route path="/profile/:userId" element={<Profile />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route
+                      exact
+                      path="/dialogs"
+                      element={<DialogsContainer />}
+                    />
+                    <Route path="/news" element={<News />} />
+                    <Route path="/music" element={<Music />} />
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/users" element={<Users />} />
+                    <Route path="/login" element={<LoginForm />} />
+                  </Routes>
+                </Content>
+              </Content>
+            </Layout>
+          </BrowserRouter>
+        </Layout>
       </Suspense>
     );
   }

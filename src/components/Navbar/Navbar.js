@@ -1,61 +1,32 @@
 import "./Navbar.css";
 import { NavLink } from "react-router-dom";
-import { AppBar, Toolbar, IconButton, Drawer } from "@mui/material";
+import { Menu } from "antd";
+import MenuItem from "antd/lib/menu/MenuItem";
+import Sider from "antd/lib/layout/Sider";
 
 const Navbar = () => {
   return (
-    <div className="nav">
-      <nav className="nav">
-        <div className="nav-item">
-          <NavLink
-            to="/profile"
-            className={({ isActive }) => (isActive ? "active" : "nav-item")}
-          >
-            Profile
-          </NavLink>
-        </div>
-        <div className="nav-item">
-          <NavLink
-            to="/dialogs"
-            className={({ isActive }) => (isActive ? "active" : "nav-item")}
-          >
-            Messages
-          </NavLink>
-        </div>
-        <div className={`${"nav-item"}`}>
-          <NavLink
-            to="news"
-            className={({ isActive }) => (isActive ? "nav-item" : "nav-item")}
-          >
-            News
-          </NavLink>
-        </div>
-        <div className={`${"nav-item"}`}>
-          <NavLink
-            to="music"
-            className={({ isActive }) => (isActive ? "nav-item" : "nav-item")}
-          >
-            Music
-          </NavLink>
-        </div>
-        <div className={`${"nav-item"}`}>
-          <NavLink
-            to="settings"
-            className={({ isActive }) => (isActive ? "nav-item" : "nav-item")}
-          >
-            Settings
-          </NavLink>
-        </div>
-        <div className={`${"nav-item"}`}>
-          <NavLink
-            to="users"
-            className={({ isActive }) => (isActive ? "nav-item" : "nav-item")}
-          >
-            Users
-          </NavLink>
-        </div>
-      </nav>
-    </div>
+    <Sider className="app-sider">
+      <div className="app-sider-nav-menu">
+        <Menu theme="dark" mode="inline" style={{ listStyleType: "none" }}>
+          <MenuItem key="1">
+            <NavLink to="/profile">Profile</NavLink>
+          </MenuItem>
+          <MenuItem key="2">
+            <NavLink to="/dialogs">Dialogs</NavLink>
+          </MenuItem>
+          <MenuItem key="3">
+            <NavLink to="/news">News</NavLink>
+          </MenuItem>
+          <MenuItem key="4">
+            <NavLink to="/music">Music</NavLink>
+          </MenuItem>
+          <MenuItem key="5">
+            <NavLink to="/users">Users</NavLink>
+          </MenuItem>
+        </Menu>
+      </div>
+    </Sider>
   );
 };
 
