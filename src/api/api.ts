@@ -7,25 +7,27 @@ const apiInstance = axios.create({
 });
 
 export const usersApi = {
-  getUsers(currentPage = 1, pageSize = 10) {
-    return apiInstance
-      .get(`users?page=${currentPage}&count=${pageSize}`)
-      .then((response) => {
+  getUsers() {
+    return axios({
+      method: 'get',
+      url: 'http://localhost:5000/api/userData/users',
+    }).then((response) => {
+      console.log('USERSAPI', response.data)
         return response.data;
-      });
+    })
   },
 
-  followUser(userId: number) {
-    return apiInstance.post(`follow/${userId}`).then((response) => {
-      return response.data;
-    });
-  },
+  // followUser(userId: number) {
+  //   return apiInstance.post(`follow/${userId}`).then((response) => {
+  //     return response.data;
+  //   });
+  // },
 
-  unfollowUser(userId: number) {
-    return apiInstance.delete(`follow/${userId}`).then((response) => {
-      return response.data;
-    });
-  },
+  // unfollowUser(userId: number) {
+  //   return apiInstance.delete(`follow/${userId}`).then((response) => {
+  //     return response.data;
+  //   });
+  // },
 };
 
 export const profileApi = {
