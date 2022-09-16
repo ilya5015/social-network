@@ -1,5 +1,12 @@
 import axios from "axios";
 
+type RegistrationDataType = {
+  login: string,
+  password: string,
+  name: string,
+  email: string
+}
+
 const apiInstance = axios.create({
   baseURL: "http://localhost:5000/api/",
   headers: { },
@@ -13,6 +20,15 @@ export const usersApi = {
         return response.data;
     })
 }}
+
+export const registrationApi = {
+  registerUser(registrationData: RegistrationDataType) {
+    return apiInstance.post(`userAuthData/registration`, {login: registrationData.login, password: registrationData.password, name: registrationData.name, email: registrationData.email}).then((response) => {
+      console.log('REGISTER USER API RESPONSE IS', response.data)
+      return response.data
+    })
+  }
+}
 
 export const profileApi = {
   getUser(userId: number) {

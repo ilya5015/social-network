@@ -12,6 +12,7 @@ import Users from "./components/Users/Users";
 import { useAppDispatch, useAppSelector } from "./hooks/hooks";
 import Navbar from "./components/Navbar/Navbar";
 import AppHeader from "./components/AppHeader/AppHeader";
+import RegistrationForm from "./components/forms/RegistrationForm";
 
 const News = React.lazy(() => import("./components/News/News"));
 const Music = React.lazy(() => import("./components/Music/Music"));
@@ -74,6 +75,7 @@ const App = () => {
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/users" element={<Users />} />
                     <Route path="/login" element={<LoginForm />} />
+                    <Route path="/register" element={<RegistrationForm />} />
                   </Routes>
                 </Content>
               </Content>

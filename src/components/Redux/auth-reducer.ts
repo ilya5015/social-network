@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { authApi } from "../../api/api";
+import { authApi, registrationApi } from "../../api/api";
 
 type InitialStateType = {
   id: number|null,
@@ -42,6 +42,16 @@ export const loginUser = createAsyncThunk(
   }
 )
 
+export const registerUser = createAsyncThunk(
+  `auth/registerUser`,
+  async ({registrationData}: any, {rejectWithValue}) => {
+    console.log('REGISTRATION DATA IS', registrationData)
+    let data = await registrationApi.registerUser(registrationData)
+    console.log('REGISTRATION API DATA IS', data)
+    return data
+  }
+)
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -69,6 +79,14 @@ const authSlice = createSlice({
         console.log('Fetching login user fulfilled', action.payload)
       }).addCase(loginUser.rejected, (state, action) => {
         console.log('Fetching login user rejected', action.error)
+      })
+      //
+      .addCase(registerUser.pending, (state, action) => {
+        console.log('Fetching register user pending')
+      }).addCase(registerUser.fulfilled, (state, action) => {
+        console.log('Fetching register user fulfilled', action)
+      }).addCase(registerUser.rejected, (state, action) => {
+        console.log('Fetching register user rejected', action.error)
       })
     }
   
