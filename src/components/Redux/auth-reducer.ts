@@ -35,6 +35,7 @@ export const fetchAuthUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async ({loginData}: any, {rejectWithValue}) => {
+    console.log('LOGIN DATA IS', loginData)
     let data = await authApi.login(loginData);
     console.log("loginUser data is:", data);
     return data
@@ -53,9 +54,9 @@ const authSlice = createSlice({
         console.log('Fetching auth user pending')
       }).addCase(fetchAuthUser.fulfilled, (state, action) => {
         console.log('Fetching auth user fulfilled', action)
-        state.id = action.payload.data.id
-      state.email = action.payload.data.email
-      state.login = action.payload.data.login
+        state.id = action.payload.id
+      state.email = action.payload.email
+      state.login = action.payload.login
       state.isAuth = true
       
       }).addCase(fetchAuthUser.rejected, (state, action) => {

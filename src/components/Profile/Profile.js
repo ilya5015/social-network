@@ -4,7 +4,7 @@ import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import { useAppSelector, useAppDispatch } from "../../hooks/hooks";
 import { useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { fetchUser, fetchUserStatus } from "../Redux/profile-reducer";
+import { fetchAuthUserProfile, fetchUser } from "../Redux/profile-reducer";
 
 const Profile = () => {
   let location = useLocation();
@@ -26,23 +26,16 @@ const Profile = () => {
     console.log("Mounted", userIdFromPath, myId, isAuth);
     if (userIdFromPath) {
       dispatch(fetchUser({ userId: userIdFromPath }));
-      dispatch(fetchUserStatus({ userId: userIdFromPath }));
     } else if (myId) {
       if (isAuth) {
-        dispatch(fetchUser({ userId: myId }));
-        dispatch(fetchUserStatus({ userId: myId }));
+        dispatch(fetchAuthUserProfile());
       }
     }
   }, [myId, params.userId]);
 
   return (
     <div>
-      <ProfileInfo
-        profile={profile}
-        userStatus={userStatus}
-        myId={myId}
-        currentId={params.userId}
-      />
+      <ProfileInfo profile={profile} myId={myId} currentId={params.userId} />
       <MyPostsContainer />
     </div>
   );

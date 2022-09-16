@@ -3,8 +3,15 @@ import { createSlice, PayloadAction, createAsyncThunk} from "@reduxjs/toolkit";
 
 type InitialStateType = {
   postData: any,
-  profile: any,
+  profile: ProfileType,
   userStatus: string
+}
+
+type ProfileType = {
+  id: number
+  email: string,
+  name: string,
+  status: string
 }
 
 let initialState: InitialStateType = {
@@ -22,7 +29,12 @@ let initialState: InitialStateType = {
       dislikeCounter: 10,
     },
   ],
-  profile: null,
+  profile: {
+    id: 0,
+    email: '',
+    name: '',
+    status: ''
+  },
   userStatus: "",
 };
 
@@ -34,13 +46,13 @@ export const fetchUser = createAsyncThunk(
   }
 )
 
-export const fetchUserStatus = createAsyncThunk(
-  'profile/fetchUserStatus',
-  async ({userId}:any, {rejectWithValue}) => {
-    const data = await profileApi.getUserStatus(userId);
+export const fetchAuthUserProfile = createAsyncThunk(
+  'profile/setAuthUserProfile',
+  async (_, {rejectWithValue}) => {
+    let data = await profileApi.getAuthUserProfile();
+    console.log("authUser profile data is:", data);
     return data
-  }
-)
+  })
 
 export const fetchUpdateUserStatus = createAsyncThunk(
   'profile/fetchUpdateUserStatus',
@@ -54,25 +66,19 @@ const profileSlice = createSlice({
   name: 'profile',
   initialState,
   reducers: {
+    setAuthUserProfile: (state, action: PayloadAction<ProfileType>) => {
+      state.profile = action.payload
+    }
   },
   extraReducers:
   (builder) => {
     builder.addCase(fetchUser.pending, (state,action) => {
       console.log('User is fetching', action.meta.arg.myId)
     }).addCase(fetchUser.fulfilled, (state,action) => {
-      state.profile = action.payload
+      state.profile = {id: action.payload.id, email: action.payload.email, name: action.payload.name, status: action.payload.status}
       console.log('User fulfilled', action.payload)
     }).addCase(fetchUser.rejected, (state,action) => {
       console.log('User rejected', action.error)
-    })
-    //
-    .addCase(fetchUserStatus.pending, (state,action) => {
-      console.log('User is fetching', action.meta.arg.myId)
-    }).addCase(fetchUserStatus.fulfilled, (state,action) => {
-      state.userStatus = action.payload
-      console.log('User fulfilled', action.payload)
-    }).addCase(fetchUserStatus.rejected, (state,action) => {
-      console.log('User rejected', action.payload)
     })
     //
     .addCase(fetchUpdateUserStatus.pending, (state,action) => {
@@ -83,6 +89,17 @@ const profileSlice = createSlice({
     })
     .addCase(fetchUpdateUserStatus.rejected, (state,action) => {
       console.log('User rejected', action.payload)
+    })
+    //
+    .addCase(fetchAuthUserProfile.pending, (state, action) => {
+      console.log('Auth user is fetching')
+    })
+    .addCase(fetchAuthUserProfile.fulfilled, (state, action) => {
+      state.profile = {id: action.payload.id, email: action.payload.email, name: action.payload.name, status: action.payload.status}
+      console.log('Auth user fulfilled', action.payload)
+    })
+    .addCase(fetchAuthUserProfile.rejected, (state, action) => {
+      console.log('Auth user rejected', action.error)
     })
 }})
 

@@ -2,24 +2,23 @@ import ProfileAvatar from "./ProfileAvatar/ProfileAvatar";
 import "./ProfileInfo.css";
 import ProfileStatus from "./ProfileStatus/ProfileStatus";
 
-const ProfileInfo = ({ profile, userStatus, myId, currentId }) => {
+const ProfileInfo = ({ profile, myId, currentId }) => {
   return (
     <div>
       <div className="profile-header">
-        <ProfileAvatar avatar={profile?.photos.small} />
+        <ProfileAvatar />
 
         <div className="profile-info">
           <ProfileStatus
-            userStatus={userStatus}
+            userStatus={profile?.status}
             myId={myId}
             currentId={currentId}
           />
-          <div className="profile-info-name">name: {profile?.fullName}</div>
-          <div className="profile-info-about">about me: {profile?.aboutMe}</div>
+          <div className="profile-info-name">name: {profile?.name}</div>
+          <div className="profile-info-about">email: {profile?.email}</div>
         </div>
       </div>
       <div>{JSON.stringify(profile, 4, 4)}</div>
-      <div className="description__text">avatar + description</div>
     </div>
   );
 };

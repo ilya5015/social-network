@@ -7,7 +7,7 @@ const LoginForm = () => {
   const dispatch = useAppDispatch();
 
   const { register, handleSubmit } = useForm({
-    email: "",
+    login: "",
     password: "",
     rememberMe: false,
   });
@@ -16,13 +16,13 @@ const LoginForm = () => {
       <form
         onSubmit={handleSubmit((data) => {
           console.log(data);
-          dispatch(loginUser({ data }));
+          dispatch(loginUser({ loginData: data }));
         })}
       >
         <input
           defaultValue=""
-          {...register("email", { required: true })}
-          placeholder="email"
+          {...register("login", { required: true })}
+          placeholder="login"
         />
         <input
           defaultValue=""
