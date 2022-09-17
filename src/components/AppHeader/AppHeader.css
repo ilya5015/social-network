@@ -3,6 +3,16 @@
   flex-direction: row;
 }
 
-.app-header-logo {
+.app-header__menu-overlay-button {
   margin-right: 50%;
+  margin-top: auto;
+  margin-left: auto;
+  margin-bottom: auto;
+}
+
+.app-header__login-button {
+  margin-left: 30%;
+  margin-top: auto;
+  margin-right: auto;
+  margin-bottom: auto;
 }

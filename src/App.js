@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "./hooks/hooks";
 import Navbar from "./components/Navbar/Navbar";
 import AppHeader from "./components/AppHeader/AppHeader";
 import RegistrationForm from "./components/forms/RegistrationForm";
+import "antd/dist/antd.css";
 
 const News = React.lazy(() => import("./components/News/News"));
 const Music = React.lazy(() => import("./components/Music/Music"));
@@ -54,7 +55,6 @@ const App = () => {
             <AppHeader />
 
             <Layout className="app-content-wrapper">
-              <Navbar />
               <Content className="content-wrapper">
                 <Content
                   title="card1"

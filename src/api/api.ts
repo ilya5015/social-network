@@ -32,7 +32,7 @@ export const registrationApi = {
 
 export const profileApi = {
   getUser(userId: number) {
-    return apiInstance.get(`userData/user/1`).then((response) => {
+    return apiInstance.get(`userData/user/${userId}`).then((response) => {
     console.log('GET USER PROFILE API', response.data)
       return response.data;
   })},

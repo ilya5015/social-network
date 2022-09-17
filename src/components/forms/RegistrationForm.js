@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useAppDispatch } from "../../hooks/hooks";
 import { registerUser } from "../Redux/auth-reducer";
+import { Button } from "antd";
 
 const RegistrationForm = () => {
   const dispatch = useAppDispatch();
@@ -40,7 +41,14 @@ const RegistrationForm = () => {
           {...register("name", { required: true })}
           placeholder="name"
         />
-        <input type="submit" onClick={() => {}} />
+        <Button
+          onClick={handleSubmit((data) => {
+            console.log(data);
+            dispatch(registerUser({ registrationData: data }));
+          })}
+        >
+          Отправить
+        </Button>
       </form>
     </div>
   );

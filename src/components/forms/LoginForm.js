@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { NavLink } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/hooks";
 import { loginUser } from "../Redux/auth-reducer";
+import { Button, Form, Input } from "antd";
 
 const LoginForm = () => {
   const dispatch = useAppDispatch();
@@ -12,14 +13,13 @@ const LoginForm = () => {
     password: "",
     rememberMe: false,
   });
+
+  const onFinish = (values) => {
+    console.log("Success:", values);
+  };
   return (
     <div>
-      <form
-        onSubmit={handleSubmit((data) => {
-          console.log(data);
-          dispatch(loginUser({ loginData: data }));
-        })}
-      >
+      <form>
         <input
           defaultValue=""
           {...register("login", { required: true })}
@@ -30,9 +30,18 @@ const LoginForm = () => {
           {...register("password", { required: true })}
           placeholder="password"
         />
-        <input type="submit" onClick={() => {}} />
+        <Button
+          onClick={handleSubmit((data) => {
+            console.log(data);
+            dispatch(loginUser({ loginData: data }));
+          })}
+        >
+          Отправить
+        </Button>
       </form>
-      <NavLink to="/register">Ещё нет аккаунта? Зарегистрируйся!</NavLink>
+      <Button type="link">
+        <NavLink to="/register">Ещё нет аккаунта? Зарегистрируйся!</NavLink>
+      </Button>
     </div>
   );
 };
