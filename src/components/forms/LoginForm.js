@@ -8,40 +8,65 @@ import { Button, Form, Input } from "antd";
 const LoginForm = () => {
   const dispatch = useAppDispatch();
 
-  const { register, handleSubmit } = useForm({
-    login: "",
-    password: "",
-    rememberMe: false,
-  });
-
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const onFinish = (data) => {
+    console.log("Success:", data);
+    dispatch(loginUser({ loginData: data }));
   };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
+  // const { register, handleSubmit } = useForm({
+  //   login: "",
+  //   password: "",
+  //   rememberMe: false,
+  // });
   return (
     <div>
-      <form>
-        <input
-          defaultValue=""
-          {...register("login", { required: true })}
-          placeholder="login"
-        />
-        <input
-          defaultValue=""
-          {...register("password", { required: true })}
-          placeholder="password"
-        />
-        <Button
-          onClick={handleSubmit((data) => {
-            console.log(data);
-            dispatch(loginUser({ loginData: data }));
-          })}
+      <Form
+        name="basic"
+        labelCol={{
+          span: 8,
+        }}
+        wrapperCol={{
+          span: 16,
+        }}
+        initialValues={{
+          remember: true,
+        }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
+      >
+        <Form.Item
+          label="login"
+          name="login"
+          rules={[
+            {
+              required: true,
+              message: "Please input your login!",
+            },
+          ]}
         >
-          Отправить
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="password"
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: "Please input your password!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Button type="primary" htmlType="submit">
+          Submit
         </Button>
-      </form>
-      <Button type="link">
-        <NavLink to="/register">Ещё нет аккаунта? Зарегистрируйся!</NavLink>
-      </Button>
+      </Form>
     </div>
   );
 };
