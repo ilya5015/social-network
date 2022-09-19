@@ -6,7 +6,8 @@ type InitialStateType = {
   email: string|null,
   login: string|null,
   isFetching: boolean,
-  isAuth: boolean
+  isAuth: boolean,
+  isRedirect: boolean
 }
 
 type AuthUserDataType = {
@@ -21,6 +22,7 @@ let initialState: InitialStateType = {
   login: null,
   isFetching: false,
   isAuth: false,
+  isRedirect: false
 };
 
 export const fetchAuthUser = createAsyncThunk(
@@ -56,7 +58,12 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    
+    toggleIsFetching(state, action) {
+      state.isFetching = action.payload.toggler
+    },
+    toggleIsRedirect(state, action) {
+      state.isRedirect = action.payload.isRedirect
+    }
   },
   extraReducers: 
     (builder) => {
@@ -91,5 +98,7 @@ const authSlice = createSlice({
     }
   
 })
+
+export const { toggleIsFetching, toggleIsRedirect } = authSlice.actions
 
 export default authSlice.reducer
