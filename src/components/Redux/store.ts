@@ -2,7 +2,6 @@ import authSlice from "./auth-reducer";
 import profileSlice from "./profile-reducer";
 import usersSlice from "./users-reducer";
 import appSlice from "./app-reducer";
-import chatSlice from "./chat-reducer";
 import { configureStore } from "@reduxjs/toolkit";
 
 const store = configureStore({
@@ -11,7 +10,7 @@ const store = configureStore({
   usersPage: usersSlice,
   authReducer: authSlice,
   appReducer: appSlice,
-  chatReducer: chatSlice}
+  }
 });
 
 export default store;
