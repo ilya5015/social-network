@@ -39,6 +39,10 @@ const Chat = () => {
         withCredentials: true,
       });
       setSocket(socket);
+      socket.on("chatMessages", (msgs) => {
+        setMessages(msgs);
+        console.log("messages", msgs);
+      });
       socket.on("message", (msg) => {
         console.log("message", msg);
         setMessages((messages) => [...messages, msg]);
@@ -68,7 +72,7 @@ const Chat = () => {
       <button
         onClick={() => {
           console.log(newMessage);
-          sendMessage(socket, "coc");
+          sendMessage(socket, newMessage);
           setNewMessage("");
         }}
       >
