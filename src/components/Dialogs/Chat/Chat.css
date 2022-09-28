@@ -1,0 +1,15 @@
+.chat-message {
+    border-radius: 5px;
+    background-color: rgb(235, 232, 232);
+    margin-top: 5px;
+    height: 50px;
+    margin-right: 20%;
+}
+.chat-message__name {
+   margin-right: 33%;
+}
+.chat-message__text {
+    margin-right: 33%;
+}
+.chat-message__time {
+}

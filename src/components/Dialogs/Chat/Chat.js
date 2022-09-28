@@ -1,19 +1,17 @@
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { useEffect, useState } from "react";
-import {
-  startMessagesListening,
-  stopMessagesListening,
-} from "../../Redux/chat-reducer";
 import styles from "../Dialogs.module.css";
-import ChatMessages from "./ChatMessages/ChatMessages";
-import socketio from "socket.io-client";
-import Cookies from "js-cookie";
 import { Manager } from "socket.io-client";
 import { io } from "socket.io-client";
 import { SOCKET_URL } from "../../../config";
-import { Input } from "antd";
+import { Input, message } from "antd";
+import "./Chat.css";
 
 const { TextArea } = Input;
+
+const info = (text) => {
+  message.info(text);
+};
 
 const Chat = () => {
   const [isAuth] = useAppSelector((state) => [state.authReducer.isAuth]);
@@ -44,8 +42,7 @@ const Chat = () => {
         console.log("messages", msgs);
       });
       socket.on("message", (msg) => {
-        console.log("message", msg);
-        setMessages((messages) => [...messages, msg]);
+        info(msg.text);
       });
       socket.on("chatMessage", (msg) => {
         console.log("chatMessage", msg);
@@ -57,7 +54,11 @@ const Chat = () => {
     <div className={styles.chatContainer}>
       <div>
         {messages.map((message) => (
-          <div>{JSON.stringify(message)}</div>
+          <div className="chat-message">
+            <span className="chat-message__name">{message.name}</span>
+            <span className="chat-message__text">{message.text}</span>
+            <span className="chat-message__time">{message.time}</span>
+          </div>
         ))}
       </div>
       <TextArea
