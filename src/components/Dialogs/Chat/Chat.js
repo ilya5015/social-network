@@ -1,3 +1,4 @@
+import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { useEffect, useState } from "react";
 import styles from "../Dialogs.module.css";
@@ -18,25 +19,39 @@ const Chat = () => {
   const dispatch = useAppDispatch();
 
   const [messages, setMessages] = useState([]);
-  const [socket, setSocket] = useState({});
+  const [socketState, setSocketState] = useState();
   const [newMessage, setNewMessage] = useState();
 
   const sendMessage = (socket, message) => {
     if (socket) {
       console.log(socket);
-      socket.emit("chatMessage", message);
+      socket.emit("sendChatMessage", message);
     }
   };
+
+  const setIncomingMessage = (msg) => {
+    console.log("chatMessage", msg);
+    if (messages.find((message) => message.messageId === msg.messageId)) {
+      console.log("messages are", messages);
+      console.log("setting message");
+      setMessages((msgs) => [...msgs, msg]);
+    } else {
+      console.log("Messages not found", messages);
+    }
+  };
+
+  useEffect(() => {
+    console.log("Socket state is", socketState);
+  }, [socketState]);
 
   useEffect(() => {
     if (isAuth === true) {
       console.log("socket");
       const socket = io(SOCKET_URL, {
-        path: "/socketchat",
         reconnectionDelayMax: 10000,
         withCredentials: true,
       });
-      setSocket(socket);
+      setSocketState(socket);
       socket.on("chatMessages", (msgs) => {
         setMessages(msgs);
         console.log("messages", msgs);
@@ -44,10 +59,22 @@ const Chat = () => {
       socket.on("message", (msg) => {
         info(msg.text);
       });
-      socket.on("chatMessage", (msg) => {
-        console.log("chatMessage", msg);
+      socket.on("getChatMessage", (msg) => {
+        setIncomingMessage(msg);
       });
+      console.log("Listeners created");
     }
+
+    return () => {
+      if (socketState) {
+        console.log("Listeners deleted", socketState);
+        socketState.removeAllListeners(
+          "getChatMessage",
+          "chatMessage",
+          "message"
+        );
+      }
+    };
   }, []);
 
   return (
@@ -73,12 +100,13 @@ const Chat = () => {
       <button
         onClick={() => {
           console.log(newMessage);
-          sendMessage(socket, newMessage);
+          sendMessage(socketState, newMessage);
           setNewMessage("");
         }}
       >
         Send
       </button>
+      {JSON.stringify(messages, 4, 4)}
     </div>
   );
 };
