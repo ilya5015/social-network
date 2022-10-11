@@ -84,6 +84,7 @@ const authSlice = createSlice({
         console.log('Fetching login user pending')
       }).addCase(loginUser.fulfilled, (state, action) => {
         console.log('Fetching login user fulfilled', action.payload)
+        state.isAuth = true
       }).addCase(loginUser.rejected, (state, action) => {
         console.log('Fetching login user rejected', action.error)
       })
