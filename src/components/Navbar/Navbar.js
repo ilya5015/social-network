@@ -8,6 +8,9 @@ const Navbar = () => {
   return (
     <div className="app-sider-nav-menu">
       <Menu theme="light" style={{}}>
+        <MenuItem key="0">
+          <NavLink to="/board">Board</NavLink>
+        </MenuItem>
         <MenuItem key="1">
           <NavLink to="/profile">Profile</NavLink>
         </MenuItem>

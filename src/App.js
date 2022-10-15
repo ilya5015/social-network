@@ -14,6 +14,7 @@ import Navbar from "./components/Navbar/Navbar";
 import AppHeader from "./components/AppHeader/AppHeader";
 import RegistrationForm from "./components/forms/RegistrationForm";
 import "antd/dist/antd.css";
+import Board from "./components/Board/Board";
 
 const News = React.lazy(() => import("./components/News/News"));
 const Music = React.lazy(() => import("./components/Music/Music"));
@@ -62,6 +63,7 @@ const App = () => {
                   className="content-wrapper-window"
                 >
                   <Routes>
+                    <Route path="/board" element={<Board />} />
                     <Route path="/" element={<Navigate to="/profile" />} />
                     <Route path="/profile/:userId" element={<Profile />} />
                     <Route path="/profile" element={<Profile />} />
