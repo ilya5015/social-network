@@ -14,6 +14,15 @@
 .thread__content {
     display: flex;
     flex-direction: row;
+    
+}
+
+.thread__content__text {
+    margin-left: 20px;
+}
+
+.thread__content__text__title {
+    font-weight: 900;
 }
 
 .thread__info__id {

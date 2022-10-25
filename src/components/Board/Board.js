@@ -25,6 +25,7 @@ const Board = () => {
           <div>
             <Thread
               threadId={thread.thread_id}
+              threadTitle={thread.title}
               threadFounderName={thread.founder_name}
               threadDate={thread.thread_time}
               threadText={thread.thread_text}
@@ -34,7 +35,15 @@ const Board = () => {
           </div>
         );
       })}
-      <Footer style={{ position: "sticky", bottom: "0", width: "100px" }}>
+      <Footer
+        style={{
+          position: "sticky",
+          bottom: "0",
+          left: "80%",
+          width: "40%",
+          marginRight: "5px",
+        }}
+      >
         <ThreadForm />
       </Footer>
     </div>

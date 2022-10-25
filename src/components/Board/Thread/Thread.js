@@ -8,6 +8,7 @@ import "./Thread.css";
 const Thread = ({
   threadId,
   threadFounderName,
+  threadTitle,
   threadDate,
   threadText,
   threadReplies,
@@ -54,7 +55,10 @@ const Thread = ({
           </a>
           <img src={threadImg} width="200" />
         </div>
-        <div className="thread__content__text">{threadText}</div>
+        <div className="thread__content__text">
+          <div className="thread__content__text__title">{threadTitle}</div>
+          <div className="thread__content__text__body">{threadText}</div>
+        </div>
       </div>
       {threadReplies.map((reply) => {
         return (
