@@ -7,6 +7,12 @@ type RegistrationDataType = {
   email: string
 }
 
+type ThreadPostingDataType = { 
+  title: string,
+  threadText: string,
+  imgs: string,
+}
+
 const apiInstance = axios.create({
   baseURL: "http://localhost:5000/api/",
   headers: { },
@@ -20,6 +26,21 @@ export const usersApi = {
         return response.data;
     })
 }}
+
+export const threadsApi = {
+  getThread() {
+    return apiInstance.get(`threadsData/getone`)
+  },
+  getThreads() {
+    return apiInstance.get(`threadsData/getall`)
+  },
+  postThread(threadPostingData: ThreadPostingDataType) {
+    return apiInstance.post(`threadsData/create`, {title: threadPostingData.title,
+      thread_text: threadPostingData.threadText,
+      imgs: threadPostingData.imgs,
+      })
+  }
+}
 
 export const registrationApi = {
   registerUser(registrationData: RegistrationDataType) {
