@@ -1,4 +1,5 @@
 import axios from "axios";
+import { isMethodSignature } from "typescript";
 
 type RegistrationDataType = {
   login: string,
@@ -10,13 +11,14 @@ type RegistrationDataType = {
 type ThreadPostingDataType = { 
   title: string,
   threadText: string,
-  imgs: string,
+  imgs: any,
 }
 
 const apiInstance = axios.create({
   baseURL: "http://localhost:5000/api/",
-  headers: { },
+  
   withCredentials: true,
+  
 });
 
 export const usersApi = {
@@ -35,10 +37,25 @@ export const threadsApi = {
     return apiInstance.get(`threadsData/getall`)
   },
   postThread(threadPostingData: ThreadPostingDataType) {
-    return apiInstance.post(`threadsData/create`, {title: threadPostingData.title,
-      thread_text: threadPostingData.threadText,
-      imgs: threadPostingData.imgs,
+    let formData = new FormData()
+      console.log('Imgs is', threadPostingData.imgs[0].originFileObj)
+      threadPostingData.imgs.forEach((img: any) => {
+          formData.append('file', img.originFileObj)
       })
+      
+  
+    formData.append('thread_text', threadPostingData.threadText)
+    formData.append('title', threadPostingData.title)
+    console.log('ffff', ...formData)
+
+    return axios.post('http://localhost:5000/api/threadsData/create', formData, {withCredentials: true, headers: {'Content-Type':'multipart/form-data'}})
+  
+
+  //   return apiInstance.post(`threadsData/create`, data, {
+  //     headers: {
+  //       'Content-Type': 'multipart/form-data'
+  //     }
+  // })
   }
 }
 

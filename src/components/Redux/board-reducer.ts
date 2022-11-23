@@ -14,6 +14,7 @@ let initialState: InitialStateType = {
 export const fetchPostThread = createAsyncThunk(
   "board/postThread",
   async ({ threadPostingData }: any, { rejectWithValue }) => {
+    
     let response = await threadsApi.postThread(threadPostingData);
     return response.data;
   }

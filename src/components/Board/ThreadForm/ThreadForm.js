@@ -2,10 +2,13 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { fetchPostThread } from "../../Redux/board-reducer";
 import { Footer } from "antd/lib/layout/layout";
-import { Button, Input, Form } from "antd";
+import { Button, Input, Form, Upload } from "antd";
 import TextArea from "antd/lib/input/TextArea";
+import { UploadOutlined } from "@ant-design/icons";
+import { useState } from "react";
 
 const ThreadForm = () => {
+  const [files, setFiles] = useState([]);
   const dispatch = useAppDispatch();
   const isFetching = useAppSelector((state) => state.boardReducer.isFetching);
 
@@ -14,7 +17,7 @@ const ThreadForm = () => {
     let threadPostingData = {
       title: data.title,
       threadText: data.text,
-      imgs: data.imgs,
+      imgs: files,
     };
     dispatch(fetchPostThread({ threadPostingData }));
   };
@@ -73,7 +76,15 @@ const ThreadForm = () => {
             },
           ]}
         >
-          <Input />
+          <Upload
+            beforeUpload={() => false}
+            onChange={({ fileList }) => {
+              console.log("File list is", fileList);
+              setFiles(fileList);
+            }}
+          >
+            <Button icon={<UploadOutlined />}>Загрузить изображения</Button>
+          </Upload>
         </Form.Item>
         <Button
           type="primary"
