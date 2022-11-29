@@ -29,6 +29,7 @@ const Board = () => {
               threadFounderName={thread.founder_name}
               threadDate={thread.thread_time}
               threadText={thread.thread_text}
+              threadImgs={thread.imgs}
               threadReplies={[]}
             />
             <hr stylee={{ size: "3px", width: "100%", align: "center" }} />

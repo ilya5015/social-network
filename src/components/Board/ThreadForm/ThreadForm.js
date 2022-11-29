@@ -80,6 +80,12 @@ const ThreadForm = () => {
             beforeUpload={() => false}
             onChange={({ fileList }) => {
               console.log("File list is", fileList);
+              fileList
+                .filter(
+                  (file) =>
+                    file.type !== "image/jpeg" || file.type !== "image/jpg"
+                )
+                .map((file, idx) => fileList.splice(idx, 1));
               setFiles(fileList);
             }}
           >

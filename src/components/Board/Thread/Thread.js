@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import threadImg from "./threadImg.jpg";
-import { Popover } from "antd";
+import { Image, Popover } from "antd";
 import ThreadReply from "./ThreadReplies/ThreadReply";
 import "./Thread.css";
 
@@ -11,6 +11,7 @@ const Thread = ({
   threadTitle,
   threadDate,
   threadText,
+  threadImgs,
   threadReplies,
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -49,11 +50,15 @@ const Thread = ({
         </Popover>
       </div>
       <div className="thread__content">
-        <div className="thread__content__img">
-          <a href={threadImg} className="thread__content__img__link">
-            {threadImg.split("/").splice(-1)}
-          </a>
-          <img src={threadImg} width="200" />
+        <div className="thread__content__imgs">
+          {threadImgs.map((threadImg) => (
+            <div className="thread__content__img">
+              <a href={threadImg} className="thread__content__img__link">
+                {threadImg.split("/").splice(-1)}
+              </a>
+              <Image width={200} src={`http://localhost:5000/${threadImg}`} />
+            </div>
+          ))}
         </div>
         <div className="thread__content__text">
           <div className="thread__content__text__title">{threadTitle}</div>
