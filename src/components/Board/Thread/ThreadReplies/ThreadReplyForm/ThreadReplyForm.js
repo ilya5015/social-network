@@ -1,13 +1,11 @@
-import React from "react";
-import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
-import { fetchGetThreads, fetchPostThread } from "../../Redux/board-reducer";
-import { Footer } from "antd/lib/layout/layout";
-import { Button, Input, Form, Upload } from "antd";
-import TextArea from "antd/lib/input/TextArea";
+import React, { useState } from "react";
+import "../ThreadReply.css";
+import { Button, Form, Input, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../../../../hooks/hooks";
+import { fetchPostThreadReply } from "../../../../Redux/board-reducer";
 
-const ThreadForm = () => {
+const ThreadReplyForm = ({ parentThreadId }) => {
   const [files, setFiles] = useState([]);
   const dispatch = useAppDispatch();
   const isFetching = useAppSelector((state) => state.boardReducer.isFetching);
@@ -15,14 +13,17 @@ const ThreadForm = () => {
   const [form] = Form.useForm();
 
   const onFinish = (data) => {
-    console.log("Success:", data);
-    let threadPostingData = {
-      title: data.title,
-      threadText: data.text,
-      imgs: files,
-    };
-    dispatch(fetchPostThread({ threadPostingData }));
-    form.resetFields();
+    console.log("Success:", data, parentThreadId);
+    if (parentThreadId && typeof parentThreadId === "number") {
+      let threadReplyPostingData = {
+        replyText: data.replyText,
+        parentThreadId: parentThreadId,
+        imgs: files,
+      };
+      console.log("on finish", threadReplyPostingData, parentThreadId);
+      dispatch(fetchPostThreadReply({ threadReplyPostingData }));
+      form.resetFields();
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -30,7 +31,7 @@ const ThreadForm = () => {
   };
 
   return (
-    <div>
+    <div className="thread-reply-form">
       <Form
         form={form}
         name="basic"
@@ -48,29 +49,18 @@ const ThreadForm = () => {
         autoComplete="off"
       >
         <Form.Item
-          label="Title"
-          name="title"
+          label="replyText"
+          name="replyText"
           rules={[
             {
               required: true,
-              message: "Please thread title",
+              message: "Please reply text",
             },
           ]}
         >
           <Input />
         </Form.Item>
-        <Form.Item
-          label="Text"
-          name="text"
-          rules={[
-            {
-              required: true,
-              message: "Please input thread text!",
-            },
-          ]}
-        >
-          <TextArea />
-        </Form.Item>
+
         <Form.Item
           label="Imgs"
           name="imgs"
@@ -108,4 +98,4 @@ const ThreadForm = () => {
   );
 };
 
-export default ThreadForm;
+export default ThreadReplyForm;

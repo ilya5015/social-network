@@ -6,7 +6,7 @@
 .app-content-wrapper {
   display: flex;
   flex-direction: row;
-  background-color: rgb(255, 255, 238);
+  background-color: #eeeeee;
 }
 
 .content-wrapper-window {

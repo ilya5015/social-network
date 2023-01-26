@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import threadImg from "./threadImg.jpg";
 import { Image, Popover } from "antd";
 import ThreadReply from "./ThreadReplies/ThreadReply";
 import "./Thread.css";
+import ThreadReplyForm from "./ThreadReplies/ThreadReplyForm/ThreadReplyForm";
 
 const Thread = ({
   threadId,
@@ -24,6 +25,10 @@ const Thread = ({
     setModalOpen(newOpen);
   };
 
+  useEffect(() => {
+    console.log("Thread replies", threadReplies);
+  }, [threadReplies]);
+
   return (
     <div className="thread">
       <div className="thread__info">
@@ -35,7 +40,7 @@ const Thread = ({
           placement="bottomLeft"
           content={
             <div>
-              <div>Reply form</div>
+              <ThreadReplyForm parentThreadId={threadId} />
             </div>
           }
           title="Reply"
