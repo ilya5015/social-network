@@ -2,6 +2,7 @@ import authSlice from "./auth-reducer";
 import profileSlice from "./profile-reducer";
 import usersSlice from "./users-reducer";
 import appSlice from "./app-reducer";
+import boardSlice from "./board-reducer"
 import { configureStore } from "@reduxjs/toolkit";
 
 const store = configureStore({
@@ -10,6 +11,7 @@ const store = configureStore({
   usersPage: usersSlice,
   authReducer: authSlice,
   appReducer: appSlice,
+  boardReducer: boardSlice
   }
 });
 

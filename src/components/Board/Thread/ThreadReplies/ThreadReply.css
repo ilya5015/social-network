@@ -1,0 +1,30 @@
+.thread-reply {
+  width: 100%;
+  background-color: #f0e0d6;
+  margin: 10px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.thread-reply__info {
+  position: inherit;
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+}
+
+.thread-reply__info__date {
+  margin-right: 40%;
+  margin-left: 40%;
+}
+
+.thread-reply__content {
+  display: flex;
+  flex-direction: row;
+}
+
+.thread-reply__content__img {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}

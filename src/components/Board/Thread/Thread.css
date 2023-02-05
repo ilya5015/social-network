@@ -1,0 +1,49 @@
+.thread {
+  width: 90%;
+  margin: 10px;
+}
+
+.thread__info {
+  position: inherit;
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+}
+
+.thread__content {
+  display: flex;
+  flex-direction: row;
+}
+
+.thread__content__text {
+  margin-left: 20px;
+}
+
+.thread__content__text__title {
+  font-weight: 900;
+}
+
+.thread__info__id {
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration-line: underline;
+  cursor: pointer;
+}
+
+.thread__info__id:hover {
+  color: #00d0d0;
+}
+
+.thread__info__founder {
+}
+
+.thread__info__date {
+  margin-right: 30%;
+  margin-left: 40%;
+}
+
+.thread__content__img {
+  display: flex;
+  flex-direction: column;
+}
