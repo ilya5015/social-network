@@ -58,7 +58,11 @@ const Thread = ({
         <div className="thread__content__imgs">
           {threadImgs.map((threadImg) => (
             <div className="thread__content__img">
-              <a href={threadImg} className="thread__content__img__link">
+              <a
+                href={`http://localhost:5000/${threadImg}`}
+                className="thread__content__img__link"
+                target="_blank"
+              >
                 {threadImg.split("/").splice(-1)}
               </a>
               <Image width={200} src={`http://localhost:5000/${threadImg}`} />
@@ -73,10 +77,10 @@ const Thread = ({
       {threadReplies.map((reply) => {
         return (
           <ThreadReply
-            replySenderName={reply}
-            replyDate={reply}
-            replyImg={reply}
-            replyText={reply}
+            replySenderName={reply.reply_sender_name}
+            replyDate={reply.reply_time}
+            replyImgs={reply.imgs}
+            replyText={reply.reply_text}
           />
         );
       })}

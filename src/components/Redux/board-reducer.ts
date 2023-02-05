@@ -23,6 +23,7 @@ export const fetchGetThreads = createAsyncThunk(
   "board/getThreads",
   async (_, { rejectWithValue }) => {
     let response = await threadsApi.getThreads();
+    console.log("fetchinnn", response);
     return response.data;
   }
 );

@@ -30,7 +30,7 @@ const Board = () => {
               threadDate={thread.thread_time}
               threadText={thread.thread_text}
               threadImgs={thread.imgs}
-              threadReplies={[]}
+              threadReplies={thread.replies}
             />
             <hr stylee={{ size: "3px", width: "100%", align: "center" }} />
           </div>
