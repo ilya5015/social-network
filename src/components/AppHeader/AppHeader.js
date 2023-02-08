@@ -5,11 +5,14 @@ import { NavLink } from "react-router-dom";
 import { Dropdown, Menu, Button } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import Navbar from "../Navbar/Navbar";
-import { useAppSelector } from "../../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { logout } from "../Redux/auth-reducer";
 
 const AppHeader = (props) => {
   const [isAuth] = useAppSelector((state) => [state.authReducer.isAuth]);
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const dispatch = useAppDispatch();
 
   let handleDrawerToggle = () => {
     setDrawerOpen((drawer) => !drawer);
@@ -24,8 +27,8 @@ const AppHeader = (props) => {
         zIndex: 1,
         width: "100%",
         height: "60px",
+        background: "#EEAA88",
         position: "fixed",
-        backgroundColor: "white",
       }}
       className="app-header"
     >
@@ -43,7 +46,13 @@ const AppHeader = (props) => {
           <NavLink to="/login">Login</NavLink>
         </Button>
       ) : (
-        <Button type="primary" className="app-header__login-button">
+        <Button
+          type="primary"
+          className="app-header__login-button"
+          onClick={() => {
+            dispatch(logout());
+          }}
+        >
           <NavLink to="/login">Logout</NavLink>
         </Button>
       )}

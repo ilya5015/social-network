@@ -48,7 +48,6 @@ const Chat = () => {
       >
         Send
       </button>
-      {JSON.stringify(messages, 4, 4)}
     </div>
   );
 };

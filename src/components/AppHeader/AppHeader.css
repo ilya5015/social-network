@@ -6,7 +6,7 @@
 .app-header__menu-overlay-button {
   margin-right: 50%;
   margin-top: auto;
-  margin-left: auto;
+  margin-left: 0px;
   margin-bottom: auto;
 }
 

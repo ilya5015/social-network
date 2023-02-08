@@ -15,15 +15,9 @@ const Navbar = () => {
           <NavLink to="/profile">Profile</NavLink>
         </MenuItem>
         <MenuItem key="2">
-          <NavLink to="/dialogs">Dialogs</NavLink>
+          <NavLink to="/dialogs">Chat</NavLink>
         </MenuItem>
         <MenuItem key="3">
-          <NavLink to="/news">News</NavLink>
-        </MenuItem>
-        <MenuItem key="4">
-          <NavLink to="/music">Music</NavLink>
-        </MenuItem>
-        <MenuItem key="5">
           <NavLink to="/users">Users</NavLink>
         </MenuItem>
       </Menu>

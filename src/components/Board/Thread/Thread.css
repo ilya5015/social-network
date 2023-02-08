@@ -29,6 +29,7 @@
   padding: 0;
   text-decoration-line: underline;
   cursor: pointer;
+  font-weight: 1000;
 }
 
 .thread__info__id:hover {
@@ -36,14 +37,25 @@
 }
 
 .thread__info__founder {
+  font-weight: 1000;
 }
 
 .thread__info__date {
-  margin-right: 30%;
-  margin-left: 40%;
+  margin-right: 10%;
+  margin-left: 10%;
 }
 
 .thread__content__img {
   display: flex;
   flex-direction: column;
+}
+
+.thread__info__answer {
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration-line: underline;
+  cursor: pointer;
+  margin-right: 10%;
+  margin-left: 10%;
 }

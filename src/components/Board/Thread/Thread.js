@@ -5,6 +5,7 @@ import { Image, Popover } from "antd";
 import ThreadReply from "./ThreadReplies/ThreadReply";
 import "./Thread.css";
 import ThreadReplyForm from "./ThreadReplies/ThreadReplyForm/ThreadReplyForm";
+import Placeholder from "../../common/Placeholder/Placeholder";
 
 const Thread = ({
   threadId,
@@ -32,9 +33,16 @@ const Thread = ({
   return (
     <div className="thread">
       <div className="thread__info">
-        <span className="thread__info__founder">{threadFounderName}</span>
+        <span className="thread__info__founder">{`Founder:`}</span>
 
-        <span className="thread__info__date">{threadDate}</span>
+        <Placeholder width={"5px"} />
+
+        <span>{threadFounderName}</span>
+
+        <span className="thread__info__date">{` ${threadDate}`}</span>
+
+        <span className="thread__info__id">{`No. `}</span>
+        <span>{threadId}</span>
 
         <Popover
           placement="bottomLeft"
@@ -49,9 +57,9 @@ const Thread = ({
           onOpenChange={handleOpenModalChange}
         >
           <button
-            className="thread__info__id"
+            className="thread__info__answer"
             onClick={() => {}}
-          >{`No.${threadId}`}</button>
+          >{`Answer`}</button>
         </Popover>
       </div>
       <div className="thread__content">

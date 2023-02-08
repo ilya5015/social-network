@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { loginUser } from "../Redux/auth-reducer";
 import { Button, Form, Input } from "antd";
 import { toggleIsFetching } from "../Redux/auth-reducer";
+import "./LoginForm.css";
 
 const LoginForm = () => {
   const [isFetching, isAuth] = useAppSelector((state) => [
@@ -37,15 +38,14 @@ const LoginForm = () => {
     return <Navigate to="/profile" />;
   } else {
     return (
-      <div>
-        <div>{JSON.stringify(isAuth, 4, 4)}</div>
+      <div className="login-form">
         <Form
           name="basic"
           labelCol={{
             span: 8,
           }}
           wrapperCol={{
-            span: 16,
+            span: 10,
           }}
           initialValues={{
             remember: true,

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import "./App.css";
+import "antd/dist/antd.variable.min.css";
 import Profile from "./components/Profile/Profile";
 import { Suspense } from "react";
 import Layout, { Content, Header } from "antd/lib/layout/layout";
@@ -10,15 +11,10 @@ import LoginForm from "./components/forms/LoginForm";
 import { Navigate, NavLink } from "react-router-dom";
 import Users from "./components/Users/Users";
 import { useAppDispatch, useAppSelector } from "./hooks/hooks";
-import Navbar from "./components/Navbar/Navbar";
 import AppHeader from "./components/AppHeader/AppHeader";
 import RegistrationForm from "./components/forms/RegistrationForm";
-import "antd/dist/antd.css";
 import Board from "./components/Board/Board";
 
-const News = React.lazy(() => import("./components/News/News"));
-const Music = React.lazy(() => import("./components/Music/Music"));
-const Settings = React.lazy(() => import("./components/Settings/Settings"));
 const DialogsContainer = React.lazy(() =>
   import("./components/Dialogs/DialogsContainer")
 );
@@ -51,17 +47,15 @@ const App = () => {
           </div>
         }
       >
-        <Layout className="app-wrapper">
-          <BrowserRouter>
+        <BrowserRouter>
+          <Layout className="app-wrapper">
             <AppHeader />
-
-            <Layout className="app-content-wrapper">
+            <Layout
+              className="app-content-wrapper"
+              style={{ background: "rgb(255, 255, 238)", minHeight: "100vh" }}
+            >
               <Content className="content-wrapper">
-                <Content
-                  title="card1"
-                  size="large"
-                  className="content-wrapper-window"
-                >
+                <Content title="card1" className="content-wrapper-window">
                   <Routes>
                     <Route path="/board" element={<Board />} />
                     <Route path="/" element={<Navigate to="/profile" />} />
@@ -72,9 +66,7 @@ const App = () => {
                       path="/dialogs"
                       element={<DialogsContainer />}
                     />
-                    <Route path="/news" element={<News />} />
-                    <Route path="/music" element={<Music />} />
-                    <Route path="/settings" element={<Settings />} />
+
                     <Route path="/users" element={<Users />} />
                     <Route path="/login" element={<LoginForm />} />
                     <Route path="/register" element={<RegistrationForm />} />
@@ -82,8 +74,8 @@ const App = () => {
                 </Content>
               </Content>
             </Layout>
-          </BrowserRouter>
-        </Layout>
+          </Layout>
+        </BrowserRouter>
       </Suspense>
     );
   }
