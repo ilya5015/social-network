@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./AppHeader.css";
 import { Header } from "antd/lib/layout/layout";
 import { NavLink } from "react-router-dom";
-import { Dropdown, Menu, Button } from "antd";
+import { Dropdown, Menu, Button, ConfigProvider } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import Navbar from "../Navbar/Navbar";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";

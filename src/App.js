@@ -14,10 +14,13 @@ import { useAppDispatch, useAppSelector } from "./hooks/hooks";
 import AppHeader from "./components/AppHeader/AppHeader";
 import RegistrationForm from "./components/forms/RegistrationForm";
 import Board from "./components/Board/Board";
+import { Button, ConfigProvider } from "antd";
 
 const DialogsContainer = React.lazy(() =>
   import("./components/Dialogs/DialogsContainer")
 );
+
+ConfigProvider.config({ theme: { primaryColor: "#f00" } });
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -40,43 +43,52 @@ const App = () => {
     return <Preloader />;
   } else {
     return (
-      <Suspense
-        fallback={
-          <div>
-            <Preloader />
-          </div>
-        }
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: "green",
+          },
+        }}
       >
-        <BrowserRouter>
-          <Layout className="app-wrapper">
-            <AppHeader />
-            <Layout
-              className="app-content-wrapper"
-              style={{ background: "rgb(255, 255, 238)", minHeight: "100vh" }}
-            >
-              <Content className="content-wrapper">
-                <Content title="card1" className="content-wrapper-window">
-                  <Routes>
-                    <Route path="/board" element={<Board />} />
-                    <Route path="/" element={<Navigate to="/profile" />} />
-                    <Route path="/profile/:userId" element={<Profile />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route
-                      exact
-                      path="/dialogs"
-                      element={<DialogsContainer />}
-                    />
+        <Suspense
+          fallback={
+            <div>
+              <Preloader />
+            </div>
+          }
+        >
+          <BrowserRouter>
+            <Layout className="app-wrapper">
+              <AppHeader />
 
-                    <Route path="/users" element={<Users />} />
-                    <Route path="/login" element={<LoginForm />} />
-                    <Route path="/register" element={<RegistrationForm />} />
-                  </Routes>
+              <Layout
+                className="app-content-wrapper"
+                style={{ background: "rgb(255, 255, 238)", minHeight: "100vh" }}
+              >
+                <Content className="content-wrapper">
+                  <Content title="card1" className="content-wrapper-window">
+                    <Routes>
+                      <Route path="/board" element={<Board />} />
+                      <Route path="/" element={<Navigate to="/profile" />} />
+                      <Route path="/profile/:userId" element={<Profile />} />
+                      <Route path="/profile" element={<Profile />} />
+                      <Route
+                        exact
+                        path="/dialogs"
+                        element={<DialogsContainer />}
+                      />
+
+                      <Route path="/users" element={<Users />} />
+                      <Route path="/login" element={<LoginForm />} />
+                      <Route path="/register" element={<RegistrationForm />} />
+                    </Routes>
+                  </Content>
                 </Content>
-              </Content>
+              </Layout>
             </Layout>
-          </Layout>
-        </BrowserRouter>
-      </Suspense>
+          </BrowserRouter>
+        </Suspense>
+      </ConfigProvider>
     );
   }
 };
