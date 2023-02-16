@@ -15,10 +15,9 @@ import AppHeader from "./components/AppHeader/AppHeader";
 import RegistrationForm from "./components/forms/RegistrationForm";
 import Board from "./components/Board/Board";
 import { Button, ConfigProvider } from "antd";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
-const DialogsContainer = React.lazy(() =>
-  import("./components/Dialogs/DialogsContainer")
-);
+const Dialogs = React.lazy(() => import("./components/Dialogs/Dialogs"));
 
 ConfigProvider.config({ theme: { primaryColor: "#f00" } });
 
@@ -68,16 +67,48 @@ const App = () => {
                 <Content className="content-wrapper">
                   <Content title="card1" className="content-wrapper-window">
                     <Routes>
-                      <Route path="/board" element={<Board />} />
-                      <Route path="/" element={<Navigate to="/profile" />} />
-                      <Route path="/profile/:userId" element={<Profile />} />
-                      <Route path="/profile" element={<Profile />} />
+                      <Route
+                        path="/board"
+                        element={
+                          <ProtectedRoute>
+                            <Board />{" "}
+                          </ProtectedRoute>
+                        }
+                      />
+
+                      <Route
+                        path="/"
+                        element={
+                          <ProtectedRoute>
+                            <Navigate to="/profile" />{" "}
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/profile/:userId"
+                        element={
+                          <ProtectedRoute>
+                            <Profile />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/profile"
+                        element={
+                          <ProtectedRoute>
+                            <Profile />
+                          </ProtectedRoute>
+                        }
+                      />
                       <Route
                         exact
                         path="/dialogs"
-                        element={<DialogsContainer />}
+                        element={
+                          <ProtectedRoute>
+                            <Dialogs />
+                          </ProtectedRoute>
+                        }
                       />
-
                       <Route path="/users" element={<Users />} />
                       <Route path="/login" element={<LoginForm />} />
                       <Route path="/register" element={<RegistrationForm />} />
