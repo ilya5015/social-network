@@ -1,6 +1,8 @@
 .app-header {
   display: flex;
   flex-direction: row;
+
+  box-shadow: 0px 5px 10px;
 }
 
 .app-header__menu-overlay-button {

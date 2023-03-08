@@ -15,3 +15,10 @@
   background-color: rgb(255, 255, 238);
   border-radius: 5px;
 }
+
+.content-wrapper {
+  background-image: url("./media/background/background.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

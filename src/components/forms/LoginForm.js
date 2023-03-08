@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navigate, NavLink } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { loginUser } from "../Redux/auth-reducer";
 import { Button, Form, Input } from "antd";
 import { toggleIsFetching } from "../Redux/auth-reducer";
 import "./LoginForm.css";
+import { useForm } from "antd/lib/form/Form";
 
 const LoginForm = () => {
   const [isFetching, isAuth] = useAppSelector((state) => [
@@ -13,7 +14,11 @@ const LoginForm = () => {
   ]);
   const dispatch = useAppDispatch();
 
-  const onFinish = (data) => {
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+
+  const [form] = useForm();
+
+  const handleOnFinish = (data) => {
     console.log("Success:", data);
     dispatch(toggleIsFetching({ toggler: true }));
     dispatch(loginUser({ loginData: data })).then(() => {
@@ -21,8 +26,14 @@ const LoginForm = () => {
     });
   };
 
-  const onFinishFailed = (errorInfo) => {
+  const handleOnFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
+  };
+
+  const handleFormChange = () => {
+    console.log("fields error", form.getFieldsError());
+    const hasErrors = form.getFieldsError().some(({ errors }) => errors.length);
+    setIsSubmitDisabled(hasErrors);
   };
 
   // const { register, handleSubmit } = useForm({
@@ -40,6 +51,7 @@ const LoginForm = () => {
     return (
       <div className="login-form">
         <Form
+          form={form}
           name="basic"
           labelCol={{
             span: 8,
@@ -50,12 +62,12 @@ const LoginForm = () => {
           initialValues={{
             remember: true,
           }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
+          onFinish={handleOnFinish}
+          onFinishFailed={handleOnFinishFailed}
           autoComplete="off"
+          onFieldsChange={handleFormChange}
         >
           <Form.Item
-            label="login"
             name="login"
             rules={[
               {
@@ -64,10 +76,9 @@ const LoginForm = () => {
               },
             ]}
           >
-            <Input />
+            <Input placeholder="login" className="login-form__input" />
           </Form.Item>
           <Form.Item
-            label="password"
             name="password"
             rules={[
               {
@@ -76,14 +87,15 @@ const LoginForm = () => {
               },
             ]}
           >
-            <Input />
+            <Input placeholder="Пароль" className="login-form__input" />
           </Form.Item>
           <Button
             type="primary"
             htmlType="submit"
             style={isFetching ? { color: "red" } : {}}
+            disabled={isSubmitDisabled}
           >
-            Submit
+            Войти
           </Button>
         </Form>
         <div>
