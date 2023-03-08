@@ -1,6 +1,6 @@
 .thread {
-  width: 90%;
-  margin: 10px;
+  width: 100%;
+  display: grid;
 }
 
 .thread__info {
@@ -8,11 +8,16 @@
   display: flex;
   flex-direction: row;
   width: 50%;
+  justify-self: center;
 }
 
 .thread__content {
   display: flex;
   flex-direction: row;
+}
+
+.thread__body {
+  width: 100%;
 }
 
 .thread__content__text {
@@ -41,8 +46,6 @@
 }
 
 .thread__info__date {
-  margin-right: 10%;
-  margin-left: 10%;
 }
 
 .thread__content__img {

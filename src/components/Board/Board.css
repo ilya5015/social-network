@@ -1,0 +1,10 @@
+.board {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.thread-wrapper {
+  width: 100%;
+}

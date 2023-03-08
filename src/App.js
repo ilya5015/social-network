@@ -16,7 +16,8 @@ import RegistrationForm from "./components/forms/RegistrationForm";
 import Board from "./components/Board/Board";
 import { Button, ConfigProvider } from "antd";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import BoardPage from "./pages/BoardPage/BoardPage";
 
 const Dialogs = React.lazy(() => import("./components/Dialogs/Dialogs"));
 
@@ -64,18 +65,23 @@ const App = () => {
               <Layout
                 className="app-content-wrapper"
                 style={{
-                  background: "rgba(255, 255, 238)",
                   minHeight: "100vh",
                 }}
               >
-                <Content className="content-wrapper">
-                  <Content className="content-wrapper-window">
+                <Content
+                  className="content-wrapper"
+                  style={{ display: "grid" }}
+                >
+                  <Content
+                    className="content-wrapper-window"
+                    style={{ display: "flex" }}
+                  >
                     <Routes>
                       <Route
                         path="/board"
                         element={
                           <ProtectedRoute>
-                            <Board />{" "}
+                            <BoardPage />
                           </ProtectedRoute>
                         }
                       />

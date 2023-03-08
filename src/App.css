@@ -9,11 +9,15 @@
 
 .content-wrapper-window {
   margin-top: 100px;
-  margin-right: 40px;
+
   margin-bottom: 40px;
-  margin-left: 40px;
+
   background-color: rgb(255, 255, 238);
   border-radius: 5px;
+
+  justify-self: center;
+  align-self: center;
+  width: 1000px;
 }
 
 .content-wrapper {

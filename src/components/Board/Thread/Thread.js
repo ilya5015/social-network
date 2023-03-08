@@ -33,16 +33,18 @@ const Thread = ({
   return (
     <div className="thread">
       <div className="thread__info">
-        <span className="thread__info__founder">{`Founder:`}</span>
+        <span className="thread__info__id">{`No. `}</span>
+        <span>{threadId}</span>
 
-        <Placeholder width={"5px"} />
+        <Placeholder width={"50px"} />
+
+        <span className="thread__info__founder">{`Founder:`}</span>
 
         <span>{threadFounderName}</span>
 
-        <span className="thread__info__date">{` ${threadDate}`}</span>
+        <Placeholder width={"50px"} />
 
-        <span className="thread__info__id">{`No. `}</span>
-        <span>{threadId}</span>
+        <span className="thread__info__date">{` ${threadDate}`}</span>
 
         <Popover
           placement="bottomLeft"
@@ -77,21 +79,24 @@ const Thread = ({
             </div>
           ))}
         </div>
-        <div className="thread__content__text">
-          <div className="thread__content__text__title">{threadTitle}</div>
-          <div className="thread__content__text__body">{threadText}</div>
+        <div className="thread__body">
+          <div className="thread__body__item thread__content__text">
+            <div className="thread__content__text__title">{threadTitle}</div>
+            <div className="thread__content__text__body">{threadText}</div>
+          </div>
+
+          {threadReplies.map((reply) => {
+            return (
+              <ThreadReply
+                replySenderName={reply.reply_sender_name}
+                replyDate={reply.reply_time}
+                replyImgs={reply.imgs}
+                replyText={reply.reply_text}
+              />
+            );
+          })}
         </div>
       </div>
-      {threadReplies.map((reply) => {
-        return (
-          <ThreadReply
-            replySenderName={reply.reply_sender_name}
-            replyDate={reply.reply_time}
-            replyImgs={reply.imgs}
-            replyText={reply.reply_text}
-          />
-        );
-      })}
     </div>
   );
 };
