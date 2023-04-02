@@ -27,8 +27,25 @@ const Thread = ({
   };
 
   useEffect(() => {
-    console.log("Thread replies", threadReplies);
-  }, [threadReplies]);
+    console.log(
+      "Thread replies",
+      threadId,
+      threadFounderName,
+      threadTitle,
+      threadDate,
+      threadText,
+      threadImgs,
+      threadReplies
+    );
+  }, [
+    threadId,
+    threadFounderName,
+    threadTitle,
+    threadDate,
+    threadText,
+    threadImgs,
+    threadReplies,
+  ]);
 
   return (
     <div className="thread">
@@ -66,7 +83,7 @@ const Thread = ({
       </div>
       <div className="thread__content">
         <div className="thread__content__imgs">
-          {threadImgs.map((threadImg) => (
+          {threadImgs?.map((threadImg) => (
             <div className="thread__content__img">
               <a
                 href={`http://localhost:5000/${threadImg}`}
@@ -85,7 +102,7 @@ const Thread = ({
             <div className="thread__content__text__body">{threadText}</div>
           </div>
 
-          {threadReplies.map((reply) => {
+          {threadReplies?.map((reply) => {
             return (
               <ThreadReply
                 replySenderName={reply.reply_sender_name}

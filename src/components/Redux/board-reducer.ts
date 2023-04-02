@@ -51,7 +51,9 @@ const boardSlice = createSlice({
         state.isFetching = true;
       })
       .addCase(fetchPostThread.fulfilled, (state, action) => {
-        console.log("Fetching posting thread fulfilled", action);
+        const threads = state.threads;
+        console.log("Fetching posting thread fulfilled", action, threads);
+        state.threads = threads.concat([action.payload]);
         state.isFetching = false;
       })
       .addCase(fetchPostThread.rejected, (state, action) => {
@@ -63,7 +65,11 @@ const boardSlice = createSlice({
         state.isFetching = true;
       })
       .addCase(fetchGetThreads.fulfilled, (state, action) => {
-        console.log("Fetching getting threads pending", action.payload);
+        console.log(
+          "Fetching getting threads pending",
+          state.threads,
+          action.payload
+        );
         state.threads = action.payload;
         state.isFetching = false;
       })

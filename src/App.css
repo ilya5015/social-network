@@ -21,7 +21,7 @@
 }
 
 .content-wrapper {
-  background-image: url("./media/background/background.jpg");
+  background-color: #f2f2f3;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
