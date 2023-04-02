@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import "antd/dist/antd.variable.min.css";
 import Profile from "./components/Profile/Profile";
@@ -18,6 +18,7 @@ import { Button, ConfigProvider } from "antd";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import BoardPage from "./pages/BoardPage/BoardPage";
+import ChatMini from "./components/Dialogs/Chat/ChatMini/ChatMini";
 
 const Dialogs = React.lazy(() => import("./components/Dialogs/Dialogs"));
 
@@ -28,6 +29,9 @@ const App = () => {
   const [initialized] = useAppSelector((state) => [
     state.appReducer.initialized,
   ]);
+  const isChatMiniOpen = useAppSelector(
+    (state) => state.appReducer.isChatMiniOpen
+  );
 
   useEffect(() => {
     dispatch(initializeApp());
@@ -126,6 +130,7 @@ const App = () => {
                   </Content>
                 </Content>
               </Layout>
+              {isChatMiniOpen ? <ChatMini /> : <div>false</div>}
             </Layout>
           </BrowserRouter>
         </Suspense>

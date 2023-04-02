@@ -1,43 +1,52 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { authApi } from "../../api/api";
 import { fetchAuthUser } from "./auth-reducer";
 
 type InitialStateType = {
-  initialized: boolean
-}
-
-let initialState : InitialStateType = {
-  initialized: false,
+  initialized: boolean;
+  isChatMiniOpen: boolean;
 };
 
-export const initializeApp = createAsyncThunk('app/initializeApp',
-  async (_, {rejectWithValue, dispatch}) => {
-    let data = await dispatch(fetchAuthUser())
+let initialState: InitialStateType = {
+  initialized: false,
+  isChatMiniOpen: false,
+};
+
+export const initializeApp = createAsyncThunk(
+  "app/initializeApp",
+  async (_, { rejectWithValue, dispatch }) => {
+    let data = await dispatch(fetchAuthUser());
     console.log("App authUser data is:", data);
-    return data
+    return data;
   }
-)
+);
 
 const appSlice = createSlice({
-  name: 'app',
+  name: "app",
   initialState,
   reducers: {
-    setInitialized: state => {
-      state.initialized = false
-    }
+    setInitialized: (state) => {
+      state.initialized = false;
+    },
+    setIsChatMiniOpen: (state, action) => {
+      state.isChatMiniOpen = action.payload.toggler;
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(initializeApp.pending, (state, action) => {
-      console.log('Initialize app pending')
-    }).addCase(initializeApp.fulfilled, (state, action) => {
-      console.log('Initialize app fulfilled', action.payload)
-      state.initialized = true
-    }).addCase(initializeApp.rejected, (state, action) => {
-      console.log('Initialize app rejected', action.error)
-    })
-  }
-})
+    builder
+      .addCase(initializeApp.pending, (state, action) => {
+        console.log("Initialize app pending");
+      })
+      .addCase(initializeApp.fulfilled, (state, action) => {
+        console.log("Initialize app fulfilled", action.payload);
+        state.initialized = true;
+      })
+      .addCase(initializeApp.rejected, (state, action) => {
+        console.log("Initialize app rejected", action.error);
+      });
+  },
+});
 
-export const {} = appSlice.actions 
+export const { setIsChatMiniOpen } = appSlice.actions;
 
 export default appSlice.reducer;

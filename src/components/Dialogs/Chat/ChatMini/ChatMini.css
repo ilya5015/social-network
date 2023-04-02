@@ -1,0 +1,33 @@
+.chat-mini-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
+  max-width: 250px;
+  justify-content: center;
+}
+
+.chat-mini {
+  overflow-y: scroll;
+}
+
+.chat-mini-message {
+  border-radius: 5px;
+  background-color: #f0e0d6;
+  margin-top: 5px;
+  height: 50px;
+}
+.chat-mini-message__name {
+  margin-right: 33%;
+  font-weight: 700;
+}
+.chat-mini-message__text {
+  margin-right: 33%;
+}
+.chat-mini-message__time {
+  font-weight: 700;
+}
+
+.chat-mini__send-form {
+  max-width: 300px;
+  margin: 10px;
+}
