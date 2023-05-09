@@ -19,6 +19,9 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import BoardPage from "./pages/BoardPage/BoardPage";
 import ChatMini from "./components/Dialogs/Chat/ChatMini/ChatMini";
+import TestStand from "./components/TestStand/TestStand";
+import Window from "./components/Window/Window";
+import { closeWindow } from "./components/Redux/windows-reducer";
 
 const Dialogs = React.lazy(() => import("./components/Dialogs/Dialogs"));
 
@@ -32,6 +35,13 @@ const App = () => {
   const isChatMiniOpen = useAppSelector(
     (state) => state.appReducer.isChatMiniOpen
   );
+  const windows = useAppSelector(
+    (state) => state.windowsReducer.expandedWindows
+  );
+
+  useEffect(() => {
+    console.log("windows are", windows);
+  }, [windows]);
 
   useEffect(() => {
     dispatch(initializeApp());
@@ -64,6 +74,18 @@ const App = () => {
         >
           <BrowserRouter>
             <Layout className="app-wrapper">
+              {windows?.map((window) => {
+                if (window) {
+                  return (
+                    <Window
+                      windowId={window.id}
+                      closeAction={() =>
+                        dispatch(closeWindow({ windowId: window.id }))
+                      }
+                    />
+                  );
+                }
+              })}
               <AppHeader />
 
               <Layout
@@ -81,6 +103,7 @@ const App = () => {
                     style={{ display: "flex" }}
                   >
                     <Routes>
+                      <Route path="/dev" element={<TestStand></TestStand>} />
                       <Route
                         path="/board"
                         element={

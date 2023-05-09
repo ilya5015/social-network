@@ -52,7 +52,7 @@ const windowsSlice = createSlice({
         .filter((window) => window.id !== windowId)
         .concat({
           id: windowId,
-          options: { ...action.payload?.options } || {},
+          options: { ...action.payload?.windowOptions } || {},
         });
 
       [state.expandedWindows, state.windowsOptions] = [
@@ -85,8 +85,10 @@ const windowsSlice = createSlice({
       const expandedWindows = state.expandedWindows;
       const windowsOptions = state.windowsOptions;
 
-      const filteredExpandedWindows = expandedWindows
-        .filter((window) => window.id !== windowId)
+      const filteredExpandedWindows = state.expandedWindows
+        .filter((window) => {
+          return window.id !== windowId;
+        })
         .concat(expandedWindows.find((window) => window.id === windowId));
 
       const filteredWindowsOptions = windowsOptions.map((window) => {
@@ -141,20 +143,21 @@ const windowsSlice = createSlice({
 
       const windowsOptions = state.windowsOptions;
 
-      const filteredWindowsOptions = windowsOptions.map((window) => {
-        if (window.id === windowId) {
+      const filteredWindowsOptions = windowsOptions.map((windowElem) => {
+        if (windowElem.id === windowId) {
           return {
-            ...window,
+            ...windowElem,
             options: {
-              ...window.options,
-              fullscreen: !window.options.fullscreen,
+              ...windowElem.options,
+              fullscreen: !windowElem.options.fullscreen,
             },
           };
         }
-        return window;
+        return windowElem;
       });
+      console.log("wefdsgf", filteredWindowsOptions);
 
-      state.expandedWindows = filteredWindowsOptions;
+      state.windowsOptions = filteredWindowsOptions;
     },
   },
 });
